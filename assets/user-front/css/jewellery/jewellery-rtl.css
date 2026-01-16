@@ -1,0 +1,25 @@
+/*------------------------
+** jewellery rtl css Start
+-------------------------*/
+.header.header-v8 .header-top .header-right {
+    text-align: left;
+}
+.rate {
+    background-position: 100% -16px;
+}
+.header.header-v8 .menu-search .search-text {
+    left: -10px;
+    right: unset;
+}
+.header.header-v8 .menu-search.menuSearchactive .search-text {
+    padding: 5px 20px 5px 40px;
+}
+.highlight-card .label-discount-percentage,
+.product-default-8 .label-discount-percentage {
+    left: 0px;
+    right: unset;
+    border-radius: 0 30px 30px 0;
+}
+/*------------------------
+** jewellery rtl css End
+-------------------------*/
