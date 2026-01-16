@@ -381,3 +381,11 @@ div.dataTables_wrapper div.dataTables_filter input {
     right: 20px;
     left: auto !important;
 }
+.nice-select,.nice-select .option {
+    text-align: right !important;
+}
+
+.nice-select:after {
+    left: 10px !important;
+    right: auto !important;
+}
