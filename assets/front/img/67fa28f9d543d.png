@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <!--====== Required meta tags ======-->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+
+  
+  <!-- Title -->
+  <title>Ecommet   - 404
+</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="http://ecom_next.test/assets/front/img/b4a5929ca757a6530b41761d6d55966ac8953e30.png" type="image/x-icon">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/bootstrap.min.css">
+  <!-- Fontawesome Icon CSS -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/fonts/fontawesome/css/all.min.css">
+  <!-- Kreativ Icon -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/font-gigo.css">
+  <!-- Magnific Popup CSS -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/magnific-popup.min.css">
+  <!-- Swiper Slider -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/swiper-bundle.min.css">
+  <!-- AOS Animation CSS -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/aos.min.css">
+  <!-- toastr css -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/user-front/css/common/toastr.min.css">
+  <!-- Meanmenu CSS -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/meanmenu.min.css">
+  <!-- Nice Select -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/nice-select.css">
+  <!-- CountDown -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/odometer.min.css">
+  
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/floating-whatsapp.css">
+  <!-- Main Style CSS -->
+  <link rel="stylesheet" href="http://ecom_next.test/assets/front/css/style.css">
+  <link rel="stylesheet" href="http://ecom_next.test/assets/user-front/css/tinymce-content.css">
+
+  <meta name="csrf-token" content="cTFCxG94hN584OmW2PQT0089Wdlm8WBqdUPLzB9n" />
+
+  
+  
+
+    <style>
+    :root {
+      --color-primary: #FF4B2B;
+      --color-primary2: #FF622E;
+      --color-primary-rgb: 255, 75, 43;
+    }
+  </style>
+
+    <script>
+    if (top.location != location) {
+        top.location.replace(location);
+    }
+    </script>
+    <!-- ===/External Code=== -->  
+</head>
+
+<body>
+
+      <!--====== Start Preloader ======-->
+
+    <!--====== Start Preloader ======-->
+    <!--<div class="preloader" id="preLoader">
+      <div class="lds-ellipsis loader">
+        <img class="lazy" data-src="http://ecom_next.test/assets/front/img/f465eb7bf46cbdd9bf82c57276173489ea437564.svg" alt="">
+      </div>
+    </div>--> <!--====== End Preloader ======-->
+    <!--====== End Preloader ======-->
+  
+  <!-- Header Start -->
+<header class="header-area header-inner-page">
+  <div class="main-responsive-nav">
+    <div class="container">
+      <div class="main-responsive-menu">
+        <div class="logo">
+          <a href="http://ecom_next.test">
+            <img src="http://ecom_next.test/assets/front/img/9564b4fa703b97d095dfc17b5ddce2f717674972.png" alt="logo">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-navbar">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg">
+        <!-- Logo -->
+        <a class="navbar-brand" href="http://ecom_next.test">
+          <img src="http://ecom_next.test/assets/front/img/9564b4fa703b97d095dfc17b5ddce2f717674972.png" alt="Logo">
+        </a>
+        <!-- Navigation items -->
+        <div class="collapse navbar-collapse mean-menu">
+          <ul id="mainMenu" class="navbar-nav mx-auto">
+                                                                    <li class="nav-item">
+                  <a class="nav-link " target="_self" href="http://ecom_next.test">Home</a>
+                </li>
+                                                                      <li class="nav-item">
+                  <a class="nav-link " target="_self" href="http://ecom_next.test/shops">Shops</a>
+                </li>
+                                                                      <li class="nav-item">
+                  <a class="nav-link " target="_self" href="http://ecom_next.test/pricing">Pricing</a>
+                </li>
+                                                                      <li class="nav-item">
+                  <a class="nav-link " target="_self" href="http://ecom_next.test/templates">Templates</a>
+                </li>
+                                                                      <li class="nav-item has-submenu">
+                  <a class="nav-link " target="_self" href="#">Pages <i class="fal fa-plus"></i></a>
+                  <ul class="menu-dropdown">
+                                                                <li class="nav-item">
+                        <a class="nav-link" href="http://ecom_next.test/about"
+                          target="_self">About</a>
+                      </li>
+                                                                <li class="nav-item">
+                        <a class="nav-link" href="http://ecom_next.test/p/terms---conditions"
+                          target="_self">Terms &amp; Conditions</a>
+                      </li>
+                                                                <li class="nav-item">
+                        <a class="nav-link" href="http://ecom_next.test/faqs"
+                          target="_self">FAQs</a>
+                      </li>
+                                      </ul>
+                </li>
+                                                                      <li class="nav-item">
+                  <a class="nav-link " target="_self" href="http://ecom_next.test/blog">Blog</a>
+                </li>
+                                                                      <li class="nav-item">
+                  <a class="nav-link " target="_self" href="http://ecom_next.test/contact">Contact</a>
+                </li>
+                                      <div class="menu-action-item-wrapper">
+                              <div class="menu-action-item">
+                  <a href="http://ecom_next.test/login" class="btn primary-btn">
+                    <span>Login</span>
+                  </a>
+                </div>
+                            
+              <div class="menu-action-item">
+                <div class="language">
+                                      <select onchange="handleSelect(this)">
+                                              <option value="en" selected>
+                          English</option>
+                                              <option value="ar" >
+                          Arabic</option>
+                                              <option value="bn" >
+                          Bangla</option>
+                                          </select>
+                                  </div>
+              </div>
+            </div>
+
+        </div>
+
+        <div class="side-option">
+                      <div class="item">
+              <a href="http://ecom_next.test/login" class="btn primary-btn">
+                <span>Login</span>
+              </a>
+            </div>
+                              <div class="item">
+            <div class="language">
+                              <select onchange="handleSelect(this)">
+                                      <option value="en" selected>
+                      English</option>
+                                      <option value="ar" >
+                      Arabic</option>
+                                      <option value="bn" >
+                      Bangla</option>
+                                  </select>
+                          </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+<!-- Header End -->
+
+      <!-- Page Title Start-->
+    <div class="page-title-area" style="background-image:url('http://ecom_next.test/assets/front/img/16aee4caef405f1e2a1a48d014fc2f5cda8f5811.png ')">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10">
+            <div class="content">
+              <h2>  404
+</h1>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb justify-content-start">
+                    <li class="breadcrumb-item"><a href="http://ecom_next.test">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">  404
+ </li>
+                  </ol>
+                </nav>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <!-- Page Title End-->
+  
+    <!--    Error section start   -->
+  <div class="error-section pt-100 pb-100 pb-90 pt-90">
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-lg-8">
+          <div class="not-found text-center mb-30">
+                          <img src="http://ecom_next.test/assets/front/img/404.png" alt="">
+                      </div>
+
+          <div class="error-txt text-center mb-20">
+                                        <h2>You&#039;re lost...</h2>
+              <p>The page you are looking for might have been moved, renamed, or might never existed.</p>
+              <a href="http://ecom_next.test" class="btn btn-md btn-primary radius-sm">Back Home</a>
+                      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--    Error section end   -->
+
+  
+  <!-- Footer Area -->
+<footer class="footer-area aaaaaa">
+  <div class="footer-top pt-120 pb-90">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-12">
+          <div class="footer-widget" data-aos="fade-up" data-aos-delay="100">
+            <div class="navbar-brand">
+              <a href="http://ecom_next.test">
+                <img class="lazyload" src="http://ecom_next.test/assets/front/images/placeholder.png" data-src="http://ecom_next.test/assets/front/img/3ee9536c58661d63192197e313d1c4bb54873f62.png" alt="Logo">
+              </a>
+            </div>
+            <p>We are a awward winning multinaitonal Company. We Believe quality and standard worlwidex Consider.</p>
+            <div class="social-link">
+
+
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1"></div>
+        <div class="col-lg-2 col-md-3 col-sm-6">
+          <div class="footer-widget" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Useful Links</h3>
+            <ul class="footer-links">
+                              <li><a href="/blog">Our Blogs</a></li>
+                              <li><a href="/contact">Contact Us</a></li>
+                              <li><a href="http://example.com/">Privacy Policy</a></li>
+                              <li><a href="/p/terms---conditions">Terms &amp; Conditions</a></li>
+                              <li><a href="/about">About Us</a></li>
+              
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="footer-widget" data-aos="fade-up" data-aos-delay="400">
+            <h3> CONTACT INFO</h3>
+
+            <ul class="info-list">
+              <li>
+                <i class="fal fa-map-marker-alt"></i>
+                <span>Sector - 11, Uttara, Dhaka</span>
+              </li>
+              <li>
+                <i class="fal fa-phone"></i>
+                <a href="tel:00123456789">01300000000</a>
+              </li>
+              <li>
+                <i class="fal fa-envelope"></i>
+                <a href="mailto:info@example.com">contact@example.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6">
+          <div class="footer-widget" data-aos="fade-up" data-aos-delay="500">
+            <h3>Newsletter</h3>
+            <p>Get latest updates first and stay with us.</p>
+            <form id="footerSubscriber" action="http://ecom_next.test/subscribe" method="POST">
+              <input type="hidden" name="_token" value="cTFCxG94hN584OmW2PQT0089Wdlm8WBqdUPLzB9n">              <div class="input-group">
+                <input class="form-control" placeholder="Enter Your Email" name="email"
+                  autocomplete="off">
+                <button class="btn btn-sm primary-btn" type="submit">Subscribe</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      <div class="copy-right-area">
+      <div class="container">
+        <div class="copy-right-content">
+                      <span>
+              <p>Copyright © 2025. All rights reserved by Ecommet.</p>
+            </span>
+                  </div>
+      </div>
+    </div>
+  </footer>
+<!-- Footer Area -->
+      <div class="cookie">
+      <div class="js-cookie-consent cookie-consent">
+    <div class="container">
+    <div class="cookie-container">
+      <div class="cookie-consent__message">
+        <p>We use cookies to give you the best online experience.<br>By continuing to browse the site you are agreeing to our use of cookies.</p>
+      </div>
+      <button class="js-cookie-consent-agree cookie-consent__agree">
+        Allow Cookies
+      </button>
+    </div>
+  </div>
+</div>
+
+    <script>
+
+        window.laravelCookieConsent = (function () {
+
+            const COOKIE_VALUE = 1;
+            const COOKIE_DOMAIN = 'ecom_next.test';
+
+            function consentWithCookies() {
+                setCookie('laravel_cookie_consent', COOKIE_VALUE, 7300);
+                hideCookieDialog();
+            }
+
+            function cookieExists(name) {
+                return (document.cookie.split('; ').indexOf(name + '=' + COOKIE_VALUE) !== -1);
+            }
+
+            function hideCookieDialog() {
+                const dialogs = document.getElementsByClassName('js-cookie-consent');
+
+                for (let i = 0; i < dialogs.length; ++i) {
+                    dialogs[i].style.display = 'none';
+                }
+            }
+
+            function setCookie(name, value, expirationInDays) {
+                const date = new Date();
+                date.setTime(date.getTime() + (expirationInDays * 24 * 60 * 60 * 1000));
+                document.cookie = name + '=' + value
+                    + ';expires=' + date.toUTCString()
+                    + ';domain=' + COOKIE_DOMAIN
+                    + ';path=/'
+                    + '';
+            }
+
+            if (cookieExists('laravel_cookie_consent')) {
+                hideCookieDialog();
+            }
+
+            const buttons = document.getElementsByClassName('js-cookie-consent-agree');
+
+            for (let i = 0; i < buttons.length; ++i) {
+                buttons[i].addEventListener('click', consentWithCookies);
+            }
+
+            return {
+                consentWithCookies: consentWithCookies,
+                hideCookieDialog: hideCookieDialog
+            };
+        })();
+    </script>
+
+    </div>
+  
+  
+  <div data-popup_delay="300" data-popup_id="10" id="modal-popup10" class="popup-wrapper">
+            <div class="popup-six">
+                <div class="popup_main-content">
+                    <div class="left-bg bg_cover lazy" data-bg="http://ecom_next.test/assets/front/img/popups/ea232c8bcbd712b7792cccb24f56f6e0ccceb4f5.png"></div>
+                    <div class="right-content bg_cover lazy" data-bg="http://ecom_next.test/assets/img/popup-7-bg.png" style="background-color: #451D53;">
+                        <h1>Exclusive VIP Access</h1>
+                        <h4>Unlock early access to our latest products and exclusive discounts. Become a VIP today!</h4>
+                        <div class="offer-timer" data-end_date="2045-03-09" data-end_time="12:00 PM"></div>
+                                                    <a href="/pricing" class="popup-main-btn" style="background-color: #383838;">Join Now</a>
+                                            </div>
+                </div>
+            </div>
+        </div>
+      
+
+  
+  <div id="WAButton"></div>
+
+  <!-- Go to Top -->
+  <div class="go-top"><i class="fal fa-angle-up"></i></div>
+  <!-- Go to Top -->
+
+  <!-- Jquery JS -->
+  <script src="http://ecom_next.test/assets/front/js/jquery.min.js"></script>
+  <!-- Popper JS -->
+  <script src="http://ecom_next.test/assets/front/js/popper.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="http://ecom_next.test/assets/front/js/bootstrap.min.js"></script>
+  <!-- Nice Select JS -->
+  <script src="http://ecom_next.test/assets/front/js/jquery.nice-select.min.js"></script>
+  <!-- Magnific Popup JS -->
+  <script src="http://ecom_next.test/assets/front/js/jquery.magnific-popup.min.js"></script>
+  
+  <script src="http://ecom_next.test/assets/front/js/vanilla-lazyload.min.js"></script>
+  
+  <script src="http://ecom_next.test/assets/front/js/jquery-syotimer.min.js"></script>
+  <!-- Swiper Slider JS -->
+  <script src="http://ecom_next.test/assets/front/js/swiper-bundle.min.js"></script>
+  <!-- Lazysizes -->
+  <script src="http://ecom_next.test/assets/front/js/lazysizes.min.js"></script>
+  <script src="http://ecom_next.test/assets/user-front/js/toastr.min.js"></script>
+  <!-- Meanmenu JS -->
+  <script src="http://ecom_next.test/assets/front/js/jquery.meanmenu.min.js"></script>
+  
+  <script src="http://ecom_next.test/assets/front/js/floating-whatsapp.js"></script>
+  <!-- AOS JS -->
+  <script src="http://ecom_next.test/assets/front/js/aos.min.js"></script>
+
+  <!-- CountDown -->
+  <script src="http://ecom_next.test/assets/front/js/appear.min.js"></script>
+  <script src="http://ecom_next.test/assets/front/js/odometer.min.js"></script>
+
+  <script>
+    "use strict";
+    var rtl = 0;
+    var mainurl = "http://ecom_next.test";
+    var vapid_public_key = "";
+    var show_more = "Show More";
+    var show_less = "Show Less";
+  </script>
+
+  <!-- Main script JS -->
+  <script src="http://ecom_next.test/assets/front/js/script.js"></script>
+
+  
+  <script src="http://ecom_next.test/assets/front/js/push-notification.js"></script>
+
+  
+  
+
+  
+  
+    <script>
+    "use strict";
+
+    function handleSelect(elm) {
+      window.location.href = "http://ecom_next.test/changelanguage" + "/" + elm.value;
+    }
+  </script>
+
+  
+  
+      <script type="text/javascript">
+      var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+
+      (function() {
+        var s1 = document.createElement("script"),
+          s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/66b746680cca4f8a7a74334b/1i4tum2ck';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+    </script>
+  
+</body>
+
+</html>
