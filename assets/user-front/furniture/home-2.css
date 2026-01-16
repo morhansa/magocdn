@@ -1,0 +1,257 @@
+/*
+
+    * This file contains the styling for the Home Variation Two, this
+    is the file you need to edit to change the look of the
+    template.
+
+******************************************************
+*****************************************************/
+.footer-area .bg-overlay::before {
+    opacity: unset;
+    opacity: 0;
+}
+
+.home-slider.home-slider-2 {
+    padding: 276px 0 150px;
+}
+
+.page-title-area {
+    position: relative;
+    padding: 180px 0 45px;
+    border-radius: 0 0 30px 30px;
+}
+
+@media only screen and (max-width: 992.99px) {
+    .home-slider.home-slider-2 {
+        padding: 120px 0 100px;
+    }
+
+    .page-title-area {
+        position: relative;
+        padding: 110px 0 50px;
+        border-radius: 0 0 30px 30px;
+    }
+}
+
+.home-slider.home-slider-2 .slider-content {
+    max-width: 600px;
+}
+
+.category-2 .category-item .category-icon {
+    position: relative;
+    overflow: hidden;
+    width: 64px;
+    height: 64px;
+    line-height: 64px;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: -32px;
+    -webkit-margin-start: 30px;
+    margin-inline-start: 30px;
+    z-index: 2;
+    background: var(--color-white);
+}
+
+.category-2 .category-item .category-icon::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.category-2 .category-item .category-content {
+    padding: 32px 12px;
+    -webkit-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.category-2 .category-item .category-content .category-title {
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+.category-2 .category-item .category-content .line {
+    display: inline-block;
+    width: 40px;
+    height: 2px;
+    background: var(--color-primary);
+}
+.category-2 .category-item .category-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.category-2 .category-item.color-1 .category-icon {
+    color: #FF6F00;
+}
+
+.category-2 .category-item.color-1 .category-icon::after {
+    background: var(--category-bg)
+}
+
+.category-2 .category-item.color-1 .category-content .line {
+    background: #FF6F00;
+}
+
+.category-2 .category-item.color-2 .category-icon {
+    color: #33ADFF;
+}
+
+.category-2 .category-item.color-2 .category-icon::after {
+    background: rgba(51, 173, 255, 0.13);
+}
+
+.category-2 .category-item.color-2 .category-content .line {
+    background: #33ADFF;
+}
+
+.category-2 .category-item.color-3 .category-icon {
+    color: #2FD075;
+}
+
+.category-2 .category-item.color-3 .category-icon::after {
+    background: rgba(47, 208, 117, 0.13);
+}
+
+.category-2 .category-item.color-3 .category-content .line {
+    background: #2FD075;
+}
+
+.category-2 .category-item.color-4 .category-icon {
+    color: #3653EE;
+}
+
+.category-2 .category-item.color-4 .category-icon::after {
+    background: rgba(54, 83, 238, 0.13);
+}
+
+.category-2 .category-item.color-4 .category-content .line {
+    background: #3653EE;
+}
+
+.category-2 .category-item.color-5 .category-icon {
+    color: #C762C7;
+}
+
+.category-2 .category-item.color-5 .category-icon::after {
+    background: rgba(199, 98, 199, 0.13);
+}
+
+.category-2 .category-item.color-5 .category-content .line {
+    background: #C762C7;
+}
+
+.category-2 .category-item.color-6 .category-icon {
+    color: #DF4A6A;
+}
+
+.category-2 .category-item.color-6 .category-icon::after {
+    background: rgba(223, 74, 106, 0.13);
+}
+
+.category-2 .category-item.color-6 .category-content .line {
+    background: #DF4A6A;
+}
+
+.category-2 .category-item.color-8 .category-icon {
+    color: #B3CDE3;
+}
+
+.category-2 .category-item.color-8 .category-icon::after {
+    background: rgba(179, 205, 227, 0.13);
+}
+
+.category-2 .category-item.color-8 .category-content .line {
+    background: #B3CDE3;
+}
+
+.category-2 .category-item.color-7 .category-icon {
+    color: #ED798E;
+}
+
+.category-2 .category-item.color-7 .category-icon::after {
+    background: rgba(237, 121, 142, 0.13);
+}
+
+.category-2 .category-item.color-7 .category-content .line {
+    background: #ED798E;
+}
+
+.category-2 .category-item:hover .category-content {
+    border-color: transparent !important;
+    -webkit-box-shadow: 0px 5px 30px rgba(49, 49, 49, 0.1);
+    box-shadow: 0px 5px 30px rgba(49, 49, 49, 0.1);
+}
+
+.bg-cover-no-repeat {
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.banner-sm{
+    padding: 60px;
+}
+.newsletter .image-inner {
+    border-radius: 0;
+}
+
+@media only screen and (max-width: 767.99px) {
+    .product-inline-style-2{
+        flex-direction: row;
+        gap: 20px;
+        align-items: center;
+    }
+    .product-inline-style-2 .product-details{
+        width: 100%;
+        padding-inline-start: 0px;
+    }
+    .product-inline-style-2 .product-img{
+        margin-right: auto;
+    }
+
+    .banner-sm.ratio.ratio-21-9::before {
+        padding-bottom: 65.85%;
+    }
+
+}
+@media only screen and (max-width: 575px) {
+    .newsletter .image-inner .title{
+        font-size: 1.2rem;
+    }
+}
+@media only screen and (max-width: 360px) {
+    .banner-collection .banner-sm .banner-content{
+        max-width: 100%;
+    }
+    .newsletter-style-2 .image-inner{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+/*# sourceMappingURL=home-2.css.map */
+
+
+
+
+#tawkchat-minified {
+    left: 20px !important;  /* বাম পাশে সরানোর জন্য */
+    right: auto !important;
+}
+
+#tawkchat-container {
+    left: 0 !important;
+    right: auto !important;
+}
+
+iframe[id^="tawk"] {
+    left: 20px !important;  /* বাম পাশের দূরত্ব নির্ধারণ */
+    right: auto !important;
+}
+
+#tawkchat-minified, #tawkchat-container, iframe[id^="tawk"] {
+    left: 20px !important;
+    right: auto !important;
+}
+

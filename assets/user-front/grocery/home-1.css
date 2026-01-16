@@ -1,0 +1,224 @@
+/*   
+    
+    * This file contains the styling for the Home Variation One, this
+    is the file you need to edit to change the look of the
+    template.
+
+******************************************************
+*****************************************************/
+.home-slider.home-slider-1 .slider-content {
+    max-width: 540px;
+    padding-inline: 40px;
+}
+
+.home-slider.home-slider-1 .text-lg {
+    max-width: 420px;
+}
+.subscribe_section{
+    margin-top: 70px;
+}
+
+.category-1 .category-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.category-1 .category-item .category-img {
+    position: relative;
+    margin-bottom: 25px;
+    width: 150px;
+    height: 150px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.category-1 .category-item .category-img::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    mask: url(../../images/grocery/category/bg-circle.svg) no-repeat center/contain;
+    -webkit-mask: url(../../images/grocery/category/bg-circle.svg) no-repeat center/contain;
+    z-index: -1;
+    background-color: var(--color-primary);
+    background: var(--item-bg-color);
+}
+
+.category-1 .category-item .absolute-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+
+.category-1 .category-item h3 {
+    color: var(--color-primary);
+}
+
+.category-1 .category-item span {
+    color: var(--color-gray-1);
+    font-size: var(--font-lg);
+}
+
+.category-1 .category-item:hover .absolute-img {
+    -webkit-transform: translate(-50%, -50%) scale(1.5);
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+.category-1 .category-item .color-1::after {
+    background-color: #E49B8B;
+}
+
+.category-1 .category-item .color-2::after {
+    background-color: #E4C28B;
+}
+
+.category-1 .category-item .color-3::after {
+    background-color: #95CE58;
+}
+
+.category-1 .category-item .color-4::after {
+    background-color: #B3CDE3;
+}
+
+.category-1 .category-item .color-5::after {
+    background-color: #ECAC7C;
+}
+
+.category-1 .category-item .color-6::after {
+    background-color: #F0D969;
+}
+
+.category-1 .category-item .color-7::after {
+    background-color: #ED798E;
+}
+
+.category-1 .category-item .color-8::after {
+    background-color: #B3CDE3;
+}
+.product-grid-card .product-img {
+    margin-bottom: 0;
+}
+
+.banner-sm .btn{
+    min-width: 105px;
+}
+
+.banner-sm .banner-content {
+    max-width: 73%;
+}
+
+.featured .featured-item .content h5{
+    font-size: 16px;
+}
+.home-slider-1 .animated-slider .slick-dots {
+    position: absolute;
+    bottom: 15px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: start;
+    margin-inline-start: 50px;
+}
+
+.home-slider-1 .animated-slider .slick-dots li {
+    height: 12px;
+    width: 12px;
+    background: var(--color-primary);
+}
+.home-slider-1 .animated-slider .slick-dots li.slick-active {
+    width: 30px;
+    border-radius: 30px;
+    background: var(--color-primary);
+}
+@media screen and (max-width: 992px) {
+    .home-slider .sub-title {
+        margin-bottom: 1px;
+    }
+    .home-slider .title-sm {
+        font-size: 22px;
+    }
+    .banner-sm .banner-content {
+        max-width: 63%;
+    }
+    .banner-sm .banner-content h3 {
+        margin-bottom: 20px;
+    }
+    
+    .home-slider .slider-item.ratio::before {
+        padding-bottom: 60%;
+    }
+    .home-slider .banner-sm.ratio.ratio-5-3::before {
+        padding-bottom: 33%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .home-slider.home-slider-1 .slider-content {
+        padding-inline: 20px;
+    }
+    .home-slider .text-lg {
+        margin-bottom: 20px;
+    }
+    .featured .featured-item .icon{
+        width: 60px;
+        height: 60px;
+    }
+    .featured-item.mb-30{
+        margin-bottom: 15px !important;
+    }
+    .home-slider .slider-item.ratio::before {
+        padding-bottom: 75%;
+    }
+    .home-slider .banner-sm.ratio.ratio-5-3::before {
+        padding-bottom: 50%;
+    }
+}
+@media screen and (max-width: 575px) {
+    .home-slider .slider-item.ratio::before {
+        padding-bottom: 100%;
+    }
+}
+@media screen and (max-width: 480px) {
+    .home-slider .slider-item.ratio::before {
+        padding-bottom: 125%;
+    }
+    .home-slider .title-sm {
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 360px) {
+    .banner-sm .banner-content {
+        max-width: 100%;
+    }
+    .home-slider .title {
+        margin-bottom: 20px;
+    }
+    .banner-sm .banner-content h3 {
+        margin-bottom: 10px;
+    }
+}
+.header-mt-fix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99;
+}
+/*# sourceMappingURL=home-1.css.map */

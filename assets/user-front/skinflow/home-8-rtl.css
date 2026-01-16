@@ -1,0 +1,18 @@
+/*------------------------
+** skinflow rtl css Start
+-------------------------*/
+.header.header-v9 .menu-search .search-text {
+    left: -10px;
+    right: unset;
+}
+.header.header-v9 .menu-search.menuSearchactive .search-text {
+    padding: 5px 20px 5px 40px;
+}
+.rate {
+    background-position: 100% -16px;
+}
+
+
+/*------------------------
+** skinflow rtl css End
+-------------------------*/
