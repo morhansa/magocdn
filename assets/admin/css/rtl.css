@@ -1,0 +1,23 @@
+form input,
+form textarea,
+form select {
+    direction: rtl;
+}
+
+form .note-editor.note-frame .note-editing-area .note-editable {
+    direction: rtl;
+    text-align: right;
+}
+
+form:not(.modal-form) input,
+form:not(.modal-form) textarea,
+form:not(.modal-form) select,
+select[name='language'] {
+    direction: rtl;
+}
+
+form:not(.modal-form) .note-editor.note-frame .note-editing-area .note-editable {
+    direction: rtl;
+    text-align: right;
+}
+

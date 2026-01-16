@@ -1,0 +1,586 @@
+/* ============================================
+   Tajawal Arabic Professional Font
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap');
+
+/* Apply Tajawal font to all RTL elements */
+body[dir="rtl"],
+body[data-dashboard-language="rtl"],
+[dir="rtl"] body,
+html[dir="rtl"] body,
+html[dir="rtl"] {
+    font-family: 'Tajawal', 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Apply to all text elements in RTL */
+body[dir="rtl"] *,
+body[data-dashboard-language="rtl"] *,
+[dir="rtl"] *,
+html[dir="rtl"] * {
+    font-family: 'Tajawal', 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Specific elements */
+body[dir="rtl"] h1,
+body[dir="rtl"] h2,
+body[dir="rtl"] h3,
+body[dir="rtl"] h4,
+body[dir="rtl"] h5,
+body[dir="rtl"] h6,
+body[dir="rtl"] p,
+body[dir="rtl"] span,
+body[dir="rtl"] div,
+body[dir="rtl"] a,
+body[dir="rtl"] button,
+body[dir="rtl"] input,
+body[dir="rtl"] textarea,
+body[dir="rtl"] select,
+body[dir="rtl"] label,
+body[dir="rtl"] .sidebar,
+body[dir="rtl"] .main-panel,
+body[dir="rtl"] .card,
+body[dir="rtl"] .table,
+body[dir="rtl"] .form-control,
+body[dir="rtl"] .btn,
+body[dir="rtl"] .nav,
+body[dir="rtl"] .navbar,
+body[data-dashboard-language="rtl"] h1,
+body[data-dashboard-language="rtl"] h2,
+body[data-dashboard-language="rtl"] h3,
+body[data-dashboard-language="rtl"] h4,
+body[data-dashboard-language="rtl"] h5,
+body[data-dashboard-language="rtl"] h6,
+body[data-dashboard-language="rtl"] p,
+body[data-dashboard-language="rtl"] span,
+body[data-dashboard-language="rtl"] div,
+body[data-dashboard-language="rtl"] a,
+body[data-dashboard-language="rtl"] button,
+body[data-dashboard-language="rtl"] input,
+body[data-dashboard-language="rtl"] textarea,
+body[data-dashboard-language="rtl"] select,
+body[data-dashboard-language="rtl"] label,
+body[data-dashboard-language="rtl"] .sidebar,
+body[data-dashboard-language="rtl"] .main-panel,
+body[data-dashboard-language="rtl"] .card,
+body[data-dashboard-language="rtl"] .table,
+body[data-dashboard-language="rtl"] .form-control,
+body[data-dashboard-language="rtl"] .btn,
+body[data-dashboard-language="rtl"] .nav,
+body[data-dashboard-language="rtl"] .navbar {
+    font-family: 'Tajawal', 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Default Css */
+.ml-1,
+.mx-1 {
+    margin-right: 0.25rem !important;
+}
+.ml-2,
+.mx-2 {
+    margin-right: 0.5rem !important;
+}
+.saas_checkout,
+.user-form-section .user-form,
+.contacts-section .contact-form,
+.contacts-section .contact-information .info-box ul.info-box-list li,
+.contacts-section .contact-information,
+.faq-sidebar,
+.faqs-section .faq-wrapper,
+.saas-footer .footer-widget .widget,
+.saas-blog .blog-item .entry-content,
+.saas-testimonial .section-title-one,
+.saas-pricing .pricing-item .pricing-body,
+.saas-featured-users .section-title-one,
+.saas-project .work-item .work-info,
+.saas-features .features-item,
+.saas-features .section-title-one,
+.saas-analysis .choose-content-box,
+.saas-banner .hero-content,
+.header-navigation .nav-container .main-menu,
+.header-navigation .nav-container .brand_logo {
+    text-align: right;
+}
+
+.header-navigation
+    .nav-container
+    .main-menu
+    ul
+    > li.menu-item-has-children
+    > a:after {
+    margin-left: 0px;
+    margin-right: 10px;
+}
+
+.header-navigation .nav-container .main-menu ul li .sub-menu {
+    left: auto;
+    right: 0;
+}
+
+.header-navigation .nav-container .nav-push-item {
+    text-align: left;
+}
+
+.header-navigation
+    .nav-container
+    .nav-push-item
+    .navbar-btn
+    .main-btn.active-btn {
+    margin-left: 0px;
+    margin-right: 16px;
+}
+
+.header-navigation
+    .nav-container
+    .nav-push-item
+    .navbar-btn
+    .main-btn.active-btn
+    i {
+    margin-left: 0px;
+    margin-right: 25px;
+}
+
+.saas-banner .hero-content span.span:after {
+    margin-left: 0px;
+    margin-right: 20px;
+}
+
+.saas-banner .hero-content ul li:last-child {
+    margin-left: 0px;
+    margin-right: 13px;
+}
+
+.saas-analysis .choose-content-box ul.list li {
+    padding-left: 0px;
+    padding-right: 30px;
+}
+
+.saas-analysis .choose-content-box ul.list li:before {
+    left: auto;
+    right: 0;
+}
+
+.section-title-one span.span:before {
+    margin-right: 0px;
+    margin-left: 15px;
+}
+
+.section-title-one span.span:before {
+    margin-right: 0px;
+    margin-left: 15px;
+}
+
+.section-title-one span.span:after {
+    margin-right: 15px;
+    margin-left: 0px;
+}
+
+.saas-project .work-item .work-img a.count {
+    right: 0;
+    left: auto;
+}
+
+.saas-pricing .pricing-item .pricing-body ul.list li:before {
+    margin-right: 0px;
+    margin-left: 10px;
+}
+
+.saas-blog .blog-item .entry-content {
+    padding-left: 0px;
+    padding-right: 30px;
+}
+
+.saas-blog .blog-item .entry-content .entry-meta ul li:after {
+    margin-left: 2px;
+    margin-right: 5px;
+}
+
+.saas-blog .blog-item .entry-content .entry-meta ul li span i {
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+.saas-footer .footer-widget .widget.useful-link-widget {
+    margin-left: 0px;
+    margin-right: 100px;
+}
+
+.saas-footer
+    .footer-widget
+    .widget.newsletter-widget
+    form
+    .form_gorup
+    .newsletter-btn {
+    right: auto;
+    left: 5px;
+}
+
+.saas-footer .footer-widget .widget.newsletter-widget .social-link li {
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+.faqs-section .faq-wrapper .card .card-header .toggle_btn {
+    float: left;
+}
+
+.faqs-section .faq-sidebar .widget.contact-widget form .form_group i {
+    right: auto;
+    left: 20px;
+}
+
+.contacts-section
+    .contact-information
+    .info-box
+    ul.info-box-list
+    li
+    .contact-info-title {
+    padding-left: 0px;
+    padding-right: 25px;
+}
+
+.contacts-section
+    .contact-information
+    .info-box
+    ul.info-box-list
+    li
+    .contact-info-title
+    i {
+    left: auto;
+    right: 0px;
+}
+
+.single_radio span,
+.single_checkbox span {
+    margin-left: 0px;
+    margin-right: 30px;
+}
+
+.single_input_label:after,
+.single_input_label:before {
+    left: auto;
+    right: 0;
+}
+
+.single_radio .single_input_label:after {
+    left: auto;
+    right: 3px;
+}
+
+.coupon_box .form_group .main-btn {
+    right: auto;
+    left: 0;
+}
+
+.nice-select {
+    text-align: right !important;
+}
+
+.nice-select .list li {
+    text-align: right;
+}
+
+.nice-select:after {
+    right: auto;
+    left: 20px;
+}
+
+.modal-header .close {
+    padding: 1rem;
+    margin: -1rem auto -1rem -1rem;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-right: 0.5em;
+    display: inline-block;
+    width: auto;
+}
+
+.datepicker,
+.jscolor,
+input[type="number"] {
+    direction: ltr;
+    text-align: right;
+    padding: 0.375rem 0.75rem;
+}
+.datepicker,
+.jscolor-active {
+    direction: ltr !important;
+}
+
+.datepicker {
+    text-align: right !important;
+}
+.flaticon-right-arrow:before {
+    content: "\f1c3" !important;
+}
+
+.breadcrumbs {
+    border-left: unset;
+    border-right: 1px solid #efefef;
+    margin-right: 25px;
+    padding-right: 25px;
+}
+
+.sidebar-search {
+    direction: rtl !important;
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 992px) {
+    .saas-footer .footer-widget .widget.useful-link-widget {
+        margin-right: 0px;
+    }
+}
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+    .saas-footer .footer-widget .widget.useful-link-widget {
+        margin-right: 0px;
+    }
+}
+
+@media (max-width: 767px) {
+    .saas-banner .hero-content ul li:last-child {
+        margin-right: 0px;
+    }
+
+    .saas-footer .footer-widget .widget.useful-link-widget {
+        margin-right: 0px;
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 404px) {
+    .saas-banner .hero-content ul li:last-child {
+        margin-right: 10px;
+    }
+}
+
+/* rtl css */
+body {
+    direction: rtl;
+    text-align: right;
+    overflow-x: hidden;
+    position: static !important;
+}
+
+/* Default css */
+.float-right {
+    float: left !important;
+}
+.offset-lg-1 {
+    margin-left: unset;
+    margin-right: 8.333333%;
+}
+
+.list-group {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.mr-2,
+.mx-2 {
+    margin-right: unset !important;
+    margin-left: 0.5rem !important;
+}
+
+/* header */
+.ml-md-auto,
+.mx-md-auto {
+    margin-left: unset !important;
+    margin-right: auto !important;
+}
+.logo-header {
+    float: right;
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu {
+    left: 0;
+    right: auto;
+}
+
+.navbar-expand-lg .navbar-nav .dropdown-menu .dropdown-item {
+    font-size: 13px;
+    text-align: right;
+}
+.logo-header .more {
+    margin-left: unset;
+    margin-right: auto;
+}
+
+/* Sidebar start */
+.logo-header .nav-toggle {
+    left: 18px;
+    right: unset;
+}
+.sidebar .nav > .nav-item a .caret,
+.sidebar[data-background-color="white"] .nav > .nav-item a .caret {
+    margin-right: auto;
+    margin-left: 0px;
+}
+.sidebar,
+.sidebar[data-background-color="white"] {
+    left: unset;
+    right: 0;
+}
+.sidebar .nav,
+.sidebar[data-background-color="white"] .nav {
+    padding-right: 0;
+}
+.sidebar .nav-collapse li a .sub-item:before,
+.sidebar[data-background-color="white"] .nav-collapse li a .sub-item:before {
+    right: -15px;
+    left: 0;
+}
+.sidebar .nav-collapse li a .sub-item,
+.sidebar[data-background-color="white"] .nav-collapse li a .sub-item {
+    margin-right: 25px;
+    margin-left: 0;
+}
+/* Sidebar End */
+
+/* Main panel start */
+.main-panel {
+    float: left;
+}
+.alert-warning {
+    border-right: 4px solid #ffad46;
+    border-left: none;
+}
+.menu-builder-list-area .list-group .list-group-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+.partner-btn-group i {
+    margin-left: 3px !important;
+    margin-right: 0 !important;
+}
+.btn .btn-label i {
+    margin-right: -2px;
+    margin-left: 2px;
+}
+
+.additional-card-header .btn {
+    float: left !important;
+}
+
+/* Main panel End */
+@media screen and (max-width: 991px) {
+    .sidebar {
+        left: unset !important;
+        right: 0 !important;
+        transform: translate3d(270px, 0, 0) !important;
+    }
+    .nav_open .main-panel,
+    .nav_open .main-header {
+        -webkit-transform: translate3d(-250px, 0, 0);
+        -moz-transform: translate3d(-250px, 0, 0);
+        -o-transform: translate3d(-250px, 0, 0);
+        -ms-transform: translate3d(-250px, 0, 0);
+        transform: translate3d(-250px, 0, 0) !important;
+    }
+}
+
+#editModal form input,
+#editModal form textarea,
+#editModal form select {
+    direction: rtl;
+}
+
+#editModal form .note-editor.note-frame .note-editing-area .note-editable {
+    direction: rtl;
+    text-align: right;
+}
+
+.options-container .option-box .delete-option,
+.options-container .option-box .remove-option {
+    left: -10px !important;
+    right: unset;
+}
+
+.variant-box .remove_option {
+    right: unset;
+    left: -25px;
+}
+
+.variant-close-btn {
+    right: unset;
+    left: 0;
+}
+
+.card .table-responsive .dropdown .dropdown-menu {
+    text-align: right;
+}
+
+.card .table-responsive .dropdown .dropdown-style2 .editbtn {
+    padding: 0.25rem 1.5rem;
+}
+
+.card .table-responsive .dropdown .dropdown-menu .deleteform {
+    padding: 0.25rem 1.5rem;
+}
+
+.sidebar .user .info .caret,
+.sidebar[data-background-color="white"] .user .info .caret {
+    left: -10px;
+    right: unset;
+}
+
+.sidebar-content .user .avatar-sm.float-left {
+    float: right !important;
+}
+
+#myEditor .list-group-item div {
+    overflow: inherit !important;
+}
+
+.close {
+    float: left !important;
+}
+
+div[data-notify="container"] .close {
+    left: 5px !important;
+    right: unset !important;
+    top: unset !important;
+    top: 0px !important;
+}
+.important_ltr {
+    direction: ltr !important;
+    text-align: left;
+}
+
+body[data-dashboard-language="rtl"] textarea::placeholder,
+body[data-dashboard-language="rtl"] input::placeholder {
+    text-align: right !important;
+}
+
+.swal-text {
+    text-align: right;
+}
+
+
+/* sidebar Rtl */
+.sidebar .nav-collapse.subnav .subnav a {
+    padding-left: 5px !important;
+    padding-right: 50px !important;
+}
+
+.sidebar .nav-collapse.subnav li a {
+    padding-left: 5px !important; 
+    padding-right: 40px !important; 
+}
+
+
+.form-check [type="checkbox"]:not(:checked), .form-check [type="checkbox"]:checked {
+    position: absolute;
+    right: -9999px;
+    left: unset;
+}
+
+.badge {
+    margin-right: auto;
+    margin-left: unset;
+}
