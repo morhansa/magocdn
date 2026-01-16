@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sora:wght@100..800&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    font-family: "Inter", serif;
+    color: #333542;
+}
+
+body {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6em;
+    overflow-x: hidden;
+}
+
+
+div {
+    font-size: 1rem;
+}
+
+.text-white {
+    color: #FFF;
+}
+
+.gry-color *,
+.gry-color {
+    color: #878f9c;
+}
+
+table {
+    width: 100%;
+}
+
+thead td {
+    font-weight: normal;
+    padding: .5rem .7rem;
+}
+
+table.padding td {
+    padding: .7rem;
+}
+
+table.sm-padding td {
+    padding: .2rem .7rem;
+}
+
+.border-bottom td,
+.border-bottom th {
+    border-bottom: 1px solid #eceff4;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.small {
+    font-size: .80rem;
+}
+.extra_small{
+    font-size: .78rem;
+}
+
+.strong {
+    font-weight: bold;
+}
+
+.main {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+.d-inline-block {
+    display: inline-block;
+}
+
+
+
+.ml-20 {
+    margin-left: 20px;
+}
+
+.mr-30 {
+    margin-right: 30px;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+
+.info-titles {
+    background: #eceff4;
+}
+
+.mt-80 {
+    margin-top: 80px;
+}
+
+.regards {
+    font-size: 0.8rem;
+    padding-right: 1.5rem
+}
+
+.variation-table-order tbody tr td,
+.variation-table tbody tr td {
+    padding: 1px 02px !important;
+}
+
+.variation-table-order tbody tr td {
+    border: none;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.border {
+    border: 1px solid #eceff4;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+.px-25 {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.pb-30 {
+    padding-bottom: 30px;
+}
+
+.mt-15 {
+    margin-top: 15px;
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.fw-bold {
+    font-weight: bold;
+}
+
+.mt-50 {
+    margin-top: 50px;
+}
+
+.clearfix {
+    overflow: auto;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+
+/* invoice */
+.invoice-container {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.invoice-heading {
+    font-size: 3rem;
+    line-height: 1;
+}
+.item_thead_td_weight{
+    font-weight: 500;
+}
+
+/* tm_invoice_info */
+
+.tm_invoice_info_table table {
+    width: 100%;
+    padding: 4px 0;
+    display: table;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    height: 10px;
+}
+
+.tm_invoice_info_table table td {
+    font-size: 14px;
+}
+
+
+/* package-info-table */
+.tm_border_left {
+    border-left: 1px solid #dbdfea;
+}
+
+.package-info-table {
+    display: table;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    width: 100%;
+    ;
+    border: 1px solid #f0f0f0;
+
+}
+
+.package-info-table thead th {
+    padding: 7px 15px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #FFF;
+}
+
+.package-info-table tbody td {
+    padding: 7px 15px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.package-info-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* tm_invoice_footer */
+.tm_border_top {
+    border-top: 1px solid #dbdfea;
+}
+
+.tm_border_bottom {
+    border-bottom: 1px solid #dbdfea;
+}
+
+.tm_invoice_footer .tm_right_footer {
+    width: 300px;
+}
+
+.tm_invoice_footer table {
+    display: table;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    float: right;
+}
+
+.tm_invoice_footer tbody td {
+    padding: 4px 15px;
+    font-size: 13px;
+}
+
+.paid-tr>td {
+    padding: 7px 15px !important;
+
+}
+
+.tm_invoice_footer tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.tm_invoice_footer .tm_left_footer {
+    padding: 20px 15px;
+}
+
+
+/* tm_note_area */
+.tm_note_area {
+    background: rgba(0, 122, 255, 1.3);
+    padding: 15px 20px;
+}
+
+.tm_note_list {
+    padding-left: 15px;
+    margin-bottom: 0;
+}
+
+.tm_note_list li {
+    font-size: 14px;
+}
+
+
+@media screen and (max-width: 767px) {}
