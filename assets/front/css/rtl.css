@@ -389,3 +389,8 @@ div.dataTables_wrapper div.dataTables_filter input {
     left: 10px !important;
     right: auto !important;
 }
+input#qc_payment_offline_6 {
+    float: right !important;
+    margin-right: -1.5em;
+    margin-left: 0 !important;
+}
