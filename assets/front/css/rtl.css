@@ -394,3 +394,6 @@ input#qc_payment_offline_6 {
     margin-right: -1.5em;
     margin-left: 0 !important;
 }
+.tinymce-content * {
+    font-family: 'Tajawal';
+}
