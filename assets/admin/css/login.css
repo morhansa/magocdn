@@ -1,5 +1,5 @@
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://fonts.googleapis.com/css?family=Alexandria:300);
 
 .login-page {
   width: 360px;
@@ -18,7 +18,7 @@
   border-radius: 8px;
 }
 .form input {
-    font-family: "Roboto", sans-serif;
+    font-family: "Alexandria", sans-serif;
     outline: 0;
     background: #1a2035;
     color: #fff;
@@ -31,7 +31,7 @@
     font-size: 14px;
 }
 .form button {
-  font-family: "Roboto", sans-serif;
+  font-family: "Alexandria", sans-serif;
   text-transform: uppercase;
   outline: 0;
   background: #4CAF50;
@@ -100,7 +100,7 @@
 body {
   background: #76b852; /* fallback for old browsers */
   background: #1a2035;
-  font-family: "Roboto", sans-serif;
+  font-family: "Alexandria", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
