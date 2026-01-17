@@ -1,0 +1,24 @@
+name: Replace Tajawal with Alexandria
+
+on:
+  workflow_dispatch:
+
+jobs:
+  replace-font:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Replace Tajawal with Alexandria
+        run: |
+          grep -rl "Tajawal" . | xargs sed -i 's/Tajawal/Alexandria/g'
+
+      - name: Commit & Push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "chore: Replace Tajawal with Alexandria"
+          git push
