@@ -16249,4 +16249,6 @@ odometer.min.css
   .sf-arrows > .sfHover > .sf-with-ul:after {
 	border-top-color: white; /* IE8 fallback colour */
   }
-  
+.page-title-area.header-next {
+    display: none !important;
+}
