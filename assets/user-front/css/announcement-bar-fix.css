@@ -1,0 +1,21 @@
+/* Announcement Bar Fix - Ensure header-top appears above announcement bar */
+.header {
+  position: relative;
+  z-index: 10;
+}
+
+.header .header-top {
+  position: relative;
+  z-index: 10;
+}
+
+/* Announcement bar should be below header-top */
+.announcement-bar {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* When announcement bar is sticky, ensure proper stacking */
+.announcement-bar[style*="position: sticky"] {
+  z-index: 1 !important;
+}
