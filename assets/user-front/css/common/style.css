@@ -9,4 +9,4 @@ section.home-slider {
        url('fonts/RiyalSymbol.woff') format('woff');
   font-display: block;
 }
-div#qc_total_price,span#qc_vat_amount,span.details_view_variants_price {font-family: 'RiyalSymbol' !important;}
+span#qc_shipping_amount,span#qc_subtotal_excl_vat,span.buy-price-old,span.buy-price-current,div#qc_total_price,span#qc_vat_amount,span.details_view_variants_price {font-family: 'RiyalSymbol' !important;}
