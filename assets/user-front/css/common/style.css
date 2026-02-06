@@ -3,3 +3,10 @@
 section.home-slider {
     margin-top: 0 !important;
 }
+@font-face {
+  font-family: 'RiyalSymbol';
+  src: url('fonts/RiyalSymbol.woff2') format('woff2'),
+       url('fonts/RiyalSymbol.woff') format('woff');
+  font-display: block;
+}
+div#qc_total_price,span#qc_vat_amount,span.details_view_variants_price {font-family: 'RiyalSymbol' !important;}
