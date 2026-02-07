@@ -2,4 +2,6 @@
     display: none !important;}
 section.home-slider {
     margin-top: 0 !important;
+}.qc-total-price {
+justify-content: initial !important;
 }
