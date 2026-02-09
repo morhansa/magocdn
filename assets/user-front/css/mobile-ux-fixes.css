@@ -1,0 +1,202 @@
+/* ========================================
+   MOBILE UX FIXES - COMPREHENSIVE
+   ======================================== */
+
+/* ==========================================
+   1. PRODUCT GALLERY - MOBILE FIX
+   ========================================== */
+
+/* Fix image overlap and improve swipe experience */
+@media (max-width: 991px) {
+    .product-single-gallery {
+        touch-action: pan-y pinch-zoom;
+        -webkit-overflow-scrolling: touch;
+        overflow: hidden;
+    }
+
+    .product-single-slider2 {
+        touch-action: pan-y pinch-zoom;
+        overflow: hidden;
+    }
+
+    .product-single-slider2 .slick-list {
+        overflow: hidden;
+        touch-action: pan-y pinch-zoom;
+    }
+
+    .product-single-slider2 .slick-track {
+        display: flex;
+        align-items: center;
+    }
+
+    .product-single-slider2 .product-single-single-item {
+        float: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Prevent image overlap */
+    .product-single-slider2 img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Improve thumbnail navigation */
+    .slider-thumbnails2 {
+        margin-top: 15px;
+        touch-action: pan-x;
+    }
+
+    .slider-thumbnails2 .slick-slide {
+        margin: 0 5px;
+    }
+}
+
+/* ==========================================
+   2. ANNOUNCEMENT BAR - MOBILE STICKY FIX
+   ========================================== */
+
+@media (max-width: 991px) {
+
+    /* Fix sticky positioning on mobile */
+    .announcement-bar[style*="position: sticky"],
+    #announcement-bar[style*="position: sticky"] {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 999 !important;
+        /* Higher z-index for mobile */
+        width: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+    }
+
+    /* Ensure header doesn't overlap */
+    .header {
+        position: relative;
+        z-index: 998;
+    }
+
+    /* Add padding to body when sticky bar is active */
+    body.has-sticky-announcement {
+        padding-top: 0;
+    }
+}
+
+/* ==========================================
+   3. CART DROPDOWN - MOBILE
+   ========================================== */
+
+@media (max-width: 991px) {
+
+    /* Cart dropdown for mobile */
+    .mobile-cart-dropdown {
+        position: fixed;
+        bottom: 70px;
+        /* Above mobile toolbar */
+        right: 10px;
+        left: 10px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+        max-height: 70vh;
+        overflow-y: auto;
+        z-index: 1000;
+        transform: translateY(calc(100% + 80px));
+        transition: transform 0.3s ease;
+        padding: 20px;
+    }
+
+    .mobile-cart-dropdown.active {
+        transform: translateY(0);
+    }
+
+    .mobile-cart-dropdown-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-cart-dropdown-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mobile-cart-dropdown-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .mobile-cart-dropdown-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .mobile-cart-dropdown-close {
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #666;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile-cart-dropdown-empty {
+        text-align: center;
+        padding: 40px 20px;
+        color: #999;
+    }
+
+    .mobile-cart-dropdown-empty i {
+        font-size: 48px;
+        margin-bottom: 15px;
+        display: block;
+    }
+}
+
+/* ==========================================
+   4. VARIATION PRICE UPDATE FIX
+   ========================================== */
+
+/* Ensure price elements are visible and styled */
+#details_new-price,
+#details_old-price {
+    transition: all 0.3s ease;
+}
+
+/* Highlight price when it changes */
+@keyframes priceUpdate {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.price-updating #details_new-price {
+    animation: priceUpdate 0.3s ease;
+}
