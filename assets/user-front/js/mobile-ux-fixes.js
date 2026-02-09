@@ -39,14 +39,35 @@ $(document).ready(function () {
         e.preventDefault();
 
         const cartUrl = $(this).data('cart-url');
+        const cartCount = parseInt($('.cart-dropdown-count').text()) || 0;
 
-        // On mobile, show dropdown
+        // On mobile
         if ($(window).width() <= 991) {
+            // If cart is empty, just redirect
+            if (cartCount === 0) {
+                window.location.href = cartUrl;
+                return;
+            }
+
+            // Show dropdown overlay
             $('.mobile-cart-dropdown-overlay').addClass('active');
             $('.mobile-cart-dropdown').addClass('active');
 
-            // Load cart content via AJAX
-            loadMobileCartContent();
+            // Try to get cart content from desktop dropdown
+            const $desktopCartDropdown = $('.cart-dropdown');
+            if ($desktopCartDropdown.length > 0 && $desktopCartDropdown.html().trim() !== '') {
+                $('.mobile-cart-dropdown-content').html($desktopCartDropdown.html());
+            } else {
+                // Show view cart button
+                $('.mobile-cart-dropdown-content').html(`
+                    <div class="text-center py-4">
+                        <a href="${cartUrl}" class="btn btn-primary">
+                            <i class="fal fa-shopping-bag"></i>
+                            عرض السلة
+                        </a>
+                    </div>
+                `);
+            }
         } else {
             // On desktop, redirect to cart page
             window.location.href = cartUrl;
@@ -58,26 +79,6 @@ $(document).ready(function () {
         $('.mobile-cart-dropdown-overlay').removeClass('active');
         $('.mobile-cart-dropdown').removeClass('active');
     });
-
-    // Load mobile cart content
-    function loadMobileCartContent() {
-        // Get cart items from existing cart dropdown or make AJAX call
-        const $desktopCart = $('.cart-dropdown');
-
-        if ($desktopCart.length > 0) {
-            // Clone desktop cart content
-            const cartContent = $desktopCart.html();
-            $('.mobile-cart-dropdown-content').html(cartContent);
-        } else {
-            // Show loading or empty state
-            $('.mobile-cart-dropdown-content').html(`
-                <div class="mobile-cart-dropdown-empty">
-                    <i class="fal fa-shopping-bag"></i>
-                    <p>السلة فارغة</p>
-                </div>
-            `);
-        }
-    }
 
     // ==========================================
     // 2. PRODUCT GALLERY - MOBILE SWIPE FIX
