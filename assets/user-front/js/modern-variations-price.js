@@ -1,118 +1,139 @@
 // ========================================
-// MODERN VARIATION SELECTOR - INTERACTIONS
+// MODERN VARIATIONS - PRICE CALCULATION
 // ========================================
 
-$(document).ready(function () {
-    console.log('=== Modern Variations JS Loaded ===');
-    console.log('Variation groups found:', $('.variation-group-modern').length);
-    console.log('Variation cards found:', $('.variation-option-card').length);
+/**
+ * Calculate total price for modern variation structure
+ * Works with .variation-group-modern and .variation-option-card
+ */
+function totalPriceModernVariations(qty) {
+    console.log('=== totalPriceModernVariations called ===', { qty: qty });
 
-    // Handle variation card selection
-    $(document).on('click', '.variation-option-card:not(.out-of-stock)', function (e) {
-        console.log('=== Variation card clicked ===');
+    // Get base price from DOM - try both old and new selectors
+    var current_detail_new_price = 0;
 
-        // Prevent default label behavior
-        e.preventDefault();
+    // Try #new-price first (original)
+    if ($('#new-price').length > 0) {
+        current_detail_new_price = parseFloat($('#new-price').attr('data-base_price')) ||
+            parseFloat($('#new-price').text()) || 0;
+        console.log('Found #new-price:', current_detail_new_price);
+    }
+    // Fallback to #details_new-price
+    else if ($('#details_new-price').length > 0) {
+        current_detail_new_price = parseFloat($('#details_new-price').attr('data-base_price')) ||
+            parseFloat($('#details_new-price').text()) || 0;
+        console.log('Found #details_new-price:', current_detail_new_price);
+    }
 
-        const $card = $(this);
-        const $radio = $card.find('input[type="radio"]');
+    var current_detail_old_price = 0;
+    // Try #old-price first (original)
+    if ($('#old-price').length > 0) {
+        current_detail_old_price = parseFloat($('#old-price').attr('data-old_price')) || 0;
+    }
+    // Fallback to #details_old-price
+    else if ($('#details_old-price').length > 0) {
+        current_detail_old_price = parseFloat($('#details_old-price').attr('data-old_price')) || 0;
+    }
 
-        console.log('Card clicked:', {
-            card_html: $card.html().substring(0, 100),
-            radio_found: $radio.length,
-            radio_name: $radio.attr('name'),
-            radio_value: $radio.val()
+    // Initialize
+    qty = parseInt(qty) || 1;
+    var variant_price = [];
+    var variant = {};
+
+    // Get all variation groups
+    var $variation_groups = $('.variation-group-modern');
+    console.log('Found variation groups:', $variation_groups.length);
+
+    $variation_groups.each(function (i, group) {
+        var variant_name = $(this).data('variant_name');
+        var $selected_card = $(this).find('.variation-option-card.selected');
+
+        console.log('Group', i, ':', {
+            variant_name: variant_name,
+            selected_cards: $selected_card.length
         });
 
-        // Don't do anything if already selected
-        if ($card.hasClass('selected')) {
-            console.log('Card already selected, ignoring');
-            return;
-        }
+        if ($selected_card.length > 0) {
+            var $radio = $selected_card.find('input[type="radio"]:checked');
 
-        // Remove selected class from ALL cards in this variation group
-        $card.closest('.variation-options-grid')
-            .find('.variation-option-card')
-            .removeClass('selected');
+            console.log('Selected card radio:', {
+                radio_found: $radio.length,
+                radio_value: $radio.val()
+            });
 
-        // Add selected class to clicked card
-        $card.addClass('selected');
-        console.log('Added selected class to card');
+            if ($radio.length > 0) {
+                var selected_variant = $radio.val();
 
-        // Uncheck all radio buttons in this group first
-        const radioName = $radio.attr('name');
-        $('input[name="' + radioName + '"]').prop('checked', false);
+                // Parse value: "name:price:stock:option_id:variation_id"
+                var v = selected_variant.split(":");
 
-        // Check THIS specific radio button
-        $radio.prop('checked', true);
-        console.log('Radio button checked:', $radio.is(':checked'));
+                variant[variant_name] = {
+                    'name': v[0],
+                    'price': parseFloat(v[1]),
+                    'stock': parseFloat(v[2]),
+                    'option_id': parseInt(v[3]),
+                    'variation_id': parseInt(v[4]),
+                };
 
-        // Trigger change event for price calculation
-        $radio.trigger('change');
-
-        // CRITICAL: Trigger the price calculation function
-        // Get current quantity
-        const qty = parseInt($('.item_quantity_details input').val()) || 1;
-        console.log('Quantity:', qty);
-
-        // Use totalPriceModernVariations for the new variation structure
-        if (typeof totalPriceModernVariations === 'function') {
-            console.log('Calling totalPriceModernVariations...');
-            totalPriceModernVariations(qty);
-        } else if (typeof totalPriceDetails2 === 'function') {
-            console.log('Calling totalPriceDetails2...');
-            totalPriceDetails2(qty);
-        } else if (typeof totalPriceDetails === 'function') {
-            console.log('Calling totalPriceDetails...');
-            totalPriceDetails(qty);
-        } else {
-            console.error('No price calculation function found!');
-        }
-    });
-
-    // Prevent click on out-of-stock cards
-    $(document).on('click', '.variation-option-card.out-of-stock', function (e) {
-        console.log('Out of stock card clicked - prevented');
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    });
-
-    // Handle radio button change (for keyboard navigation)
-    $(document).on('change', '.product-variant.input-radio', function () {
-        console.log('=== Radio button changed via keyboard ===');
-        const $radio = $(this);
-        const $card = $radio.closest('.variation-option-card');
-
-        // Remove selected from all cards in this group
-        $card.closest('.variation-options-grid')
-            .find('.variation-option-card')
-            .removeClass('selected');
-
-        // Add selected to this card
-        $card.addClass('selected');
-        console.log('Updated selected class via keyboard');
-    });
-
-    // Auto-select first available option if none selected
-    console.log('=== Auto-selecting first options ===');
-    $('.variation-group-modern').each(function () {
-        const $group = $(this);
-        const $selectedCard = $group.find('.variation-option-card.selected');
-
-        console.log('Group:', {
-            variant_name: $group.data('variant_name'),
-            has_selected: $selectedCard.length > 0
-        });
-
-        if ($selectedCard.length === 0) {
-            const $firstAvailable = $group.find('.variation-option-card:not(.out-of-stock)').first();
-            if ($firstAvailable.length) {
-                console.log('Auto-selecting first available option');
-                $firstAvailable.click();
+                variant_price.push(parseFloat(v[1]));
+                console.log('Added variant price:', parseFloat(v[1]));
             }
         }
     });
 
-    console.log('=== Modern Variations JS Ready ===');
-});
+    // Calculate total
+    var total = current_detail_new_price;
+    var old_total = current_detail_old_price;
+
+    for (var i = 0; i < variant_price.length; i++) {
+        total += variant_price[i];
+        old_total += variant_price[i];
+    }
+
+    total = (total * qty).toFixed(2);
+
+    console.log('Final calculation:', {
+        base_price: current_detail_new_price,
+        variant_prices: variant_price,
+        qty: qty,
+        total: total
+    });
+
+    // Update DOM - use BOTH old and new selectors
+    // Update #final-price (original)
+    if ($('#final-price').length > 0) {
+        $('#final-price').val(total);
+        console.log('Updated #final-price');
+    }
+    // Update #details_final-price (new)
+    if ($('#details_final-price').length > 0) {
+        $('#details_final-price').val(total);
+        console.log('Updated #details_final-price');
+    }
+
+    // Update new price display - use BOTH selectors
+    if ($('#new-price').length > 0) {
+        $('#new-price').text(total);
+        console.log('Updated #new-price text');
+    }
+    if ($('#details_new-price').length > 0) {
+        $('#details_new-price').text(total);
+        console.log('Updated #details_new-price text');
+    }
+
+    // Update old price display - use BOTH selectors
+    if ($('#old-price').length > 0) {
+        var total_old_price = (old_total * qty).toFixed(2);
+        $('#old-price').text(total_old_price);
+    }
+    if ($('#details_old-price').length > 0) {
+        var total_old_price = (old_total * qty).toFixed(2);
+        $('#details_old-price').text(total_old_price);
+    }
+
+    console.log('=== totalPriceModernVariations complete ===');
+    return total;
+}
+
+// Export to window for global access
+window.totalPriceModernVariations = totalPriceModernVariations;
