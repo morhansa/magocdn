@@ -1,1 +1,132 @@
-.product-variations-modern{margin-bottom:30px}.variation-group-modern{margin-bottom:25px}.variation-group-modern .variation-title{font-size:16px;font-weight:600;color:#333;margin-bottom:12px;display:flex;align-items:center;gap:8px}.variation-title .required-star{color:#f44;font-size:14px}.variation-options-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}.variation-option-card{position:relative;border:2px solid #e0e0e0;border-radius:12px;padding:16px 12px;cursor:pointer;transition:.3s;background:#fff;text-align:center}.variation-option-card:hover{border-color:var(--color-primary,#007bff);box-shadow:0 4px 12px rgba(0,123,255,.15);transform:translateY(-2px)}.variation-option-card.selected{border-color:var(--color-primary,#007bff);background:linear-gradient(135deg,rgba(0,123,255,.05) 0,rgba(0,123,255,.1) 100%);box-shadow:0 4px 16px rgba(0,123,255,.2)}.variation-option-card.out-of-stock{opacity:.5;cursor:not-allowed;background:#f5f5f5}.variation-option-card.out-of-stock:hover{transform:none;box-shadow:none;border-color:#e0e0e0}.variation-option-card input[type=radio]{position:absolute;opacity:0;pointer-events:none}.variation-option-name{font-size:14px;font-weight:600;color:#333;margin-bottom:6px;line-height:1.3}.variation-option-card.selected .variation-option-name{color:var(--color-primary,#007bff)}.variation-option-price{font-size:13px;color:#666;display:flex;align-items:center;justify-content:center;gap:4px}.variation-option-price i{font-size:10px}.variation-option-card.selected .variation-option-price{color:var(--color-primary,#007bff);font-weight:600}.variation-option-card::after{content:'✓';position:absolute;top:8px;right:8px;width:22px;height:22px;background:var(--color-primary,#007bff);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;line-height:22px;text-align:center;opacity:0;transform:scale(0);transition:.3s}.variation-option-card.selected::after{opacity:1;transform:scale(1)}.variation-option-card .out-of-stock-badge{position:absolute;top:8px;left:8px;background:#f44;color:#fff;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:600}@media (max-width:576px){.variation-options-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}.variation-option-card{padding:12px 8px}.variation-option-name{font-size:13px}.variation-option-price{font-size:12px}}[dir=rtl] .variation-option-card::after{right:auto;left:8px}[dir=rtl] .variation-option-card .out-of-stock-badge{left:auto;right:8px}
+/* ========================================
+   FIX: SCROLL BAR VISIBILITY
+   ======================================== */
+
+/* Ensure body can scroll */
+html, body {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    height: auto !important;
+    min-height: 100vh !important;
+}
+
+/* Remove any overflow hidden from main containers */
+.main-wrapper,
+.main-content,
+.product-details-area {
+    overflow: visible !important;
+}
+
+/* Force scrollbar to always show on desktop (optional) */
+@media (min-width: 992px) {
+    body {
+        overflow-y: scroll !important;
+    }
+}
+
+/* Fix for modals interfering with scroll */
+body.modal-open {
+    overflow: hidden !important;
+    padding-right: 0 !important;
+}
+
+/* ========================================
+   MODERN VARIATIONS - RESPONSIVE GRID
+   ======================================== */
+
+/* Make variation cards scrollable on mobile if too many */
+.variation-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+@media (max-width: 768px) {
+    .variation-options-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
+}
+
+/* ========================================
+   VARIATION CARDS - ENSURE PROPER SIZING
+   ======================================== */
+
+.variation-option-card {
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.variation-option-card:hover:not(.out-of-stock) {
+    border-color: #d4af37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(212, 175, 55, 0.2);
+}
+
+.variation-option-card.selected {
+    border-color: #d4af37;
+    background: linear-gradient(135deg, #f8f5ed 0%, #fff 100%);
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.variation-option-card.out-of-stock {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #f5f5f5;
+}
+
+/* ========================================
+   FIX: PREVENT LAYOUT SHIFT
+   ======================================== */
+
+.product-single-details {
+    min-height: 600px;
+}
+
+.product-price {
+    min-height: 60px;
+}
+
+/* ========================================
+   ENSURE PROPER SPACING
+   ======================================== */
+
+.variation-group-modern {
+    margin-bottom: 20px;
+}
+
+.variation-title {
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* ========================================
+   MOBILE OPTIMIZATIONS
+   ======================================== */
+
+@media (max-width: 576px) {
+    .variation-option-card {
+        min-height: 70px;
+        padding: 10px 6px;
+    }
+    
+    .variation-option-name {
+        font-size: 14px;
+    }
+    
+    .variation-option-price {
+        font-size: 12px;
+    }
+}
