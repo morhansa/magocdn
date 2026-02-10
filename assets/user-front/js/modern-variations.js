@@ -7,6 +7,8 @@ $(document).ready(function () {
     console.log('Variation groups found:', $('.variation-group-modern').length);
     console.log('Variation cards found:', $('.variation-option-card').length);
 
+    var isAutoSelecting = false; // Guard flag to prevent infinite loops
+
     // Handle variation card selection
     $(document).on('click', '.variation-option-card:not(.out-of-stock)', function (e) {
         console.log('=== Variation card clicked ===');
@@ -21,7 +23,8 @@ $(document).ready(function () {
             card_html: $card.html().substring(0, 100),
             radio_found: $radio.length,
             radio_name: $radio.attr('name'),
-            radio_value: $radio.val()
+            radio_value: $radio.val(),
+            is_auto_selecting: isAutoSelecting
         });
 
         // Don't do anything if already selected
@@ -96,6 +99,8 @@ $(document).ready(function () {
 
     // Auto-select first available option if none selected
     console.log('=== Auto-selecting first options ===');
+    isAutoSelecting = true; // Set flag
+
     $('.variation-group-modern').each(function () {
         const $group = $(this);
         const $selectedCard = $group.find('.variation-option-card.selected');
@@ -109,10 +114,21 @@ $(document).ready(function () {
             const $firstAvailable = $group.find('.variation-option-card:not(.out-of-stock)').first();
             if ($firstAvailable.length) {
                 console.log('Auto-selecting first available option');
-                $firstAvailable.click();
+                // Directly add class and check radio without triggering click
+                $firstAvailable.addClass('selected');
+                $firstAvailable.find('input[type="radio"]').prop('checked', true);
             }
         }
     });
+
+    isAutoSelecting = false; // Reset flag
+
+    // Trigger price calculation after auto-select
+    if (typeof totalPriceModernVariations === 'function') {
+        const qty = parseInt($('.item_quantity_details input').val()) || 1;
+        console.log('Initial price calculation with qty:', qty);
+        totalPriceModernVariations(qty);
+    }
 
     console.log('=== Modern Variations JS Ready ===');
 });
