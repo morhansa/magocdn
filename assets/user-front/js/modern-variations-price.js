@@ -1,139 +1,202 @@
 // ========================================
-// MODERN VARIATIONS - PRICE CALCULATION
+// MODERN VARIATION PRICE CALCULATOR 2
 // ========================================
 
 /**
- * Calculate total price for modern variation structure
- * Works with .variation-group-modern and .variation-option-card
+ * Calculate total price for modern variations
+ * @param {number} quantity - Product quantity
  */
-function totalPriceModernVariations(qty) {
-    console.log('=== totalPriceModernVariations called ===', { qty: qty });
+function totalPriceModernVariations(quantity) {
+    console.log('=== totalPriceModernVariations called ===');
+    console.log('Quantity:', quantity);
 
-    // Get base price from DOM - try both old and new selectors
-    var current_detail_new_price = 0;
-
-    // Try #new-price first (original)
-    if ($('#new-price').length > 0) {
-        current_detail_new_price = parseFloat($('#new-price').attr('data-base_price')) ||
-            parseFloat($('#new-price').text()) || 0;
-        console.log('Found #new-price:', current_detail_new_price);
-    }
-    // Fallback to #details_new-price
-    else if ($('#details_new-price').length > 0) {
-        current_detail_new_price = parseFloat($('#details_new-price').attr('data-base_price')) ||
-            parseFloat($('#details_new-price').text()) || 0;
-        console.log('Found #details_new-price:', current_detail_new_price);
+    // Get base price from data attribute
+    const basePriceElement = document.getElementById('details_new-price');
+    if (!basePriceElement) {
+        console.error('Base price element not found!');
+        return;
     }
 
-    var current_detail_old_price = 0;
-    // Try #old-price first (original)
-    if ($('#old-price').length > 0) {
-        current_detail_old_price = parseFloat($('#old-price').attr('data-old_price')) || 0;
-    }
-    // Fallback to #details_old-price
-    else if ($('#details_old-price').length > 0) {
-        current_detail_old_price = parseFloat($('#details_old-price').attr('data-old_price')) || 0;
-    }
+    const basePrice = parseFloat(basePriceElement.getAttribute('data-base_price')) || 0;
+    console.log('Base price:', basePrice);
 
-    // Initialize
-    qty = parseInt(qty) || 1;
-    var variant_price = [];
-    var variant = {};
+    // Get old price for discount calculation
+    const oldPriceElement = document.getElementById('details_old-price');
+    const oldPrice = oldPriceElement ? parseFloat(oldPriceElement.getAttribute('data-old_price')) || 0 : 0;
+    console.log('Old price:', oldPrice);
 
-    // Get all variation groups
-    var $variation_groups = $('.variation-group-modern');
-    console.log('Found variation groups:', $variation_groups.length);
+    // Calculate total variation price from all selected options
+    let totalVariationPrice = 0;
+    const selectedVariations = [];
 
-    $variation_groups.each(function (i, group) {
-        var variant_name = $(this).data('variant_name');
-        var $selected_card = $(this).find('.variation-option-card.selected');
+    // Find all checked radio buttons in modern variations
+    const checkedRadios = document.querySelectorAll('.product-variant.input-radio:checked');
+    console.log('Checked radios found:', checkedRadios.length);
 
-        console.log('Group', i, ':', {
-            variant_name: variant_name,
-            selected_cards: $selected_card.length
-        });
+    checkedRadios.forEach(function(radio) {
+        const value = radio.value; // Format: "name:price:stock:id:variant_id"
+        console.log('Radio value:', value);
 
-        if ($selected_card.length > 0) {
-            var $radio = $selected_card.find('input[type="radio"]:checked');
-
-            console.log('Selected card radio:', {
-                radio_found: $radio.length,
-                radio_value: $radio.val()
-            });
-
-            if ($radio.length > 0) {
-                var selected_variant = $radio.val();
-
-                // Parse value: "name:price:stock:option_id:variation_id"
-                var v = selected_variant.split(":");
-
-                variant[variant_name] = {
-                    'name': v[0],
-                    'price': parseFloat(v[1]),
-                    'stock': parseFloat(v[2]),
-                    'option_id': parseInt(v[3]),
-                    'variation_id': parseInt(v[4]),
-                };
-
-                variant_price.push(parseFloat(v[1]));
-                console.log('Added variant price:', parseFloat(v[1]));
+        if (value) {
+            const parts = value.split(':');
+            if (parts.length >= 2) {
+                const varPrice = parseFloat(parts[1]) || 0;
+                totalVariationPrice += varPrice;
+                selectedVariations.push({
+                    name: parts[0],
+                    price: varPrice,
+                    stock: parts[2],
+                    id: parts[3]
+                });
+                console.log('Added variation price:', varPrice);
             }
         }
     });
 
-    // Calculate total
-    var total = current_detail_new_price;
-    var old_total = current_detail_old_price;
+    console.log('Total variation price:', totalVariationPrice);
+    console.log('Selected variations:', selectedVariations);
 
-    for (var i = 0; i < variant_price.length; i++) {
-        total += variant_price[i];
-        old_total += variant_price[i];
+    // Calculate final price
+    const finalPrice = (basePrice + totalVariationPrice) * quantity;
+    console.log('Final price:', finalPrice);
+
+    // Calculate final old price if discount exists
+    let finalOldPrice = 0;
+    if (oldPrice > 0) {
+        const oldVariationPrice = (oldPrice > basePrice) ? (oldPrice - basePrice) : 0;
+        finalOldPrice = (oldPrice + totalVariationPrice) * quantity;
+        console.log('Final old price:', finalOldPrice);
     }
 
-    total = (total * qty).toFixed(2);
-
-    console.log('Final calculation:', {
-        base_price: current_detail_new_price,
-        variant_prices: variant_price,
-        qty: qty,
-        total: total
-    });
-
-    // Update DOM - use BOTH old and new selectors
-    // Update #final-price (original)
-    if ($('#final-price').length > 0) {
-        $('#final-price').val(total);
-        console.log('Updated #final-price');
-    }
-    // Update #details_final-price (new)
-    if ($('#details_final-price').length > 0) {
-        $('#details_final-price').val(total);
-        console.log('Updated #details_final-price');
-    }
-
-    // Update new price display - use BOTH selectors
-    if ($('#new-price').length > 0) {
-        $('#new-price').text(total);
-        console.log('Updated #new-price text');
-    }
-    if ($('#details_new-price').length > 0) {
-        $('#details_new-price').text(total);
-        console.log('Updated #details_new-price text');
+    // Update displayed prices
+    updateDisplayedPrice('details_new-price', finalPrice);
+    
+    if (oldPrice > 0 && finalOldPrice > finalPrice) {
+        updateDisplayedPrice('details_old-price', finalOldPrice);
+        // Show old price container
+        const oldPriceArea = document.querySelector('.old-price-area');
+        if (oldPriceArea) {
+            oldPriceArea.style.display = 'flex';
+        }
+        
+        // Update discount percentage
+        const discountPercent = Math.round(((finalOldPrice - finalPrice) / finalOldPrice) * 100);
+        const discountElements = document.querySelectorAll('.discountoff, .percentage-text span');
+        discountElements.forEach(function(el) {
+            if (el.classList.contains('percentage-text')) {
+                el.querySelector('span').textContent = discountPercent + '%';
+            } else {
+                el.textContent = discountPercent + '% خصم';
+            }
+        });
     }
 
-    // Update old price display - use BOTH selectors
-    if ($('#old-price').length > 0) {
-        var total_old_price = (old_total * qty).toFixed(2);
-        $('#old-price').text(total_old_price);
-    }
-    if ($('#details_old-price').length > 0) {
-        var total_old_price = (old_total * qty).toFixed(2);
-        $('#details_old-price').text(total_old_price);
+    // Update hidden final price input
+    const finalPriceInput = document.getElementById('details_final-price');
+    if (finalPriceInput) {
+        finalPriceInput.value = finalPrice.toFixed(2);
+        console.log('Updated hidden final price input:', finalPrice.toFixed(2));
     }
 
-    console.log('=== totalPriceModernVariations complete ===');
-    return total;
+    // Update stock availability
+    updateStockAvailability(selectedVariations);
+
+    console.log('=== Price calculation complete ===');
 }
 
-// Export to window for global access
-window.totalPriceModernVariations = totalPriceModernVariations;
+/**
+ * Update displayed price element
+ * @param {string} elementId - Element ID
+ * @param {number} price - Price to display
+ */
+function updateDisplayedPrice(elementId, price) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        // Format price with 2 decimal places
+        element.textContent = price.toFixed(2);
+        console.log('Updated', elementId, 'to:', price.toFixed(2));
+    }
+}
+
+/**
+ * Update stock availability based on selected variations
+ * @param {Array} selectedVariations - Array of selected variation objects
+ */
+function updateStockAvailability(selectedVariations) {
+    if (selectedVariations.length === 0) {
+        return;
+    }
+
+    // Find minimum stock from all selected variations
+    let minStock = Infinity;
+    selectedVariations.forEach(function(variation) {
+        const stock = parseInt(variation.stock) || 0;
+        if (stock < minStock) {
+            minStock = stock;
+        }
+    });
+
+    console.log('Minimum stock available:', minStock);
+
+    // Update stock status
+    const stockStatus = document.querySelector('.stock-status');
+    if (stockStatus) {
+        const badge = stockStatus.querySelector('.badge');
+        if (badge) {
+            if (minStock > 0) {
+                badge.className = 'badge bg-success';
+                badge.innerHTML = '<i class="fa fa-check"></i> متوفر';
+            } else {
+                badge.className = 'badge bg-danger';
+                badge.innerHTML = '<i class="fa fa-times"></i> غير متوفر';
+            }
+        }
+    }
+
+    // Update quantity input max
+    const qtyInput = document.querySelector('.item_quantity_details input[type="number"]');
+    if (qtyInput && minStock > 0) {
+        qtyInput.setAttribute('max', minStock);
+        // Reset quantity if current value exceeds stock
+        if (parseInt(qtyInput.value) > minStock) {
+            qtyInput.value = minStock;
+        }
+    }
+}
+
+/**
+ * Legacy function for backward compatibility
+ */
+function totalPriceDetails2(quantity) {
+    console.log('totalPriceDetails2 called - redirecting to totalPriceModernVariations');
+    totalPriceModernVariations(quantity);
+}
+
+/**
+ * Legacy function for backward compatibility
+ */
+function totalPriceDetails(quantity) {
+    console.log('totalPriceDetails called - redirecting to totalPriceModernVariations');
+    totalPriceModernVariations(quantity);
+}
+
+// Initialize on DOM ready
+$(document).ready(function() {
+    console.log('=== Modern Variations Price Calculator Ready ===');
+    
+    // Listen for quantity changes
+    $(document).on('change', '.item_quantity_details input[type="number"]', function() {
+        const qty = parseInt($(this).val()) || 1;
+        console.log('Quantity changed to:', qty);
+        totalPriceModernVariations(qty);
+    });
+
+    // Listen for +/- buttons
+    $(document).on('click', '.quantity-btn', function() {
+        setTimeout(function() {
+            const qty = parseInt($('.item_quantity_details input[type="number"]').val()) || 1;
+            console.log('Quantity button clicked, new qty:', qty);
+            totalPriceModernVariations(qty);
+        }, 100);
+    });
+});
