@@ -53,16 +53,18 @@
         var img = $(slick.$slides[nextSlide]).find("img");
         $(".zoomWindowContainer,.zoomContainer").remove();
 
-        $(img).elevateZoom({
-            zoomWindowFadeIn: 500,
-            zoomWindowFadeOut: 750,
-            zoomType: "inner",
-            cursor: "crosshair"
-        });
+        if ($(window).width() > 991) {
+            $(img).elevateZoom({
+                zoomWindowFadeIn: 500,
+                zoomWindowFadeOut: 750,
+                zoomType: "inner",
+                cursor: "crosshair"
+            });
+        }
     });
 
     ////Elevate Zoom
-    if (proSingleSlider.length) {
+    if (proSingleSlider.length && $(window).width() > 991) {
         $(".product-single-slider .slick-active img").elevateZoom({
             zoomWindowFadeIn: 500,
             zoomWindowFadeOut: 750,
@@ -105,13 +107,15 @@
 
     $(".product-single-slider2").on('setPosition afterChange', function (event, slick, currentSlide) {
         $(".zoomContainer").remove();
-        $(".product-single-slider2 .slick-active img").elevateZoom({
-            zoomWindowFadeIn: 500,
-            zoomWindowFadeOut: 750,
-            zoomType: "inner",
-            cursor: "crosshair",
-            scrollZoom: false,
-        });
+        if ($(window).width() > 991) {
+            $(".product-single-slider2 .slick-active img").elevateZoom({
+                zoomWindowFadeIn: 500,
+                zoomWindowFadeOut: 750,
+                zoomType: "inner",
+                cursor: "crosshair",
+                scrollZoom: false,
+            });
+        }
     });
 
     (function ($) {
