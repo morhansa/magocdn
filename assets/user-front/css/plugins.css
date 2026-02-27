@@ -16252,3 +16252,7 @@ odometer.min.css
 .page-title-area.header-next {
     display: none !important;
 }
+.brand-logo {
+    width: 120px !important;
+    height: auto;
+}
