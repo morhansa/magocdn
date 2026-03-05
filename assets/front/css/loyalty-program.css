@@ -1,0 +1,188 @@
+/* ========================================
+   LOYALTY CARD - PROFESSIONAL MODERN DESIGN
+   ======================================== */
+
+:root {
+  --loyalty-primary: var(--qc-primary, #4F46E5);
+  --loyalty-primary-rgb: var(--qc-primary-rgb, 79, 70, 229);
+  --loyalty-gold: #F59E0B;
+  --loyalty-green: #10B981;
+  --loyalty-bg: #FFFFFF;
+  --loyalty-border: #E5E7EB;
+  --loyalty-text: #1F2937;
+  --loyalty-text-muted: #6B7280;
+}
+
+.loyalty-card,
+.qc-loyalty-card {
+  background: var(--loyalty-bg);
+  border: 1px solid var(--loyalty-border);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 24px 0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loyalty-card:hover,
+.qc-loyalty-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  border-color: var(--loyalty-primary);
+}
+
+/* Icon Wrapper */
+.loyalty-card .loyalty-icon-wrapper,
+.qc-loyalty-card .loyalty-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  background: #FFFBEB; /* Amber 50 */
+  border: 1px solid #FEF3C7;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--loyalty-gold);
+  transition: 0.3s;
+}
+
+.loyalty-card:hover .loyalty-icon-wrapper,
+.qc-loyalty-card:hover .loyalty-icon-wrapper {
+  background: #FEF3C7;
+  transform: scale(1.05) rotate(5deg);
+}
+
+/* Different icon color for logged out state (Gift icon) */
+.loyalty-card .loyalty-icon-wrapper i.fa-gift,
+.qc-loyalty-card .loyalty-icon-wrapper i.fa-gift {
+  color: var(--loyalty-primary);
+}
+
+.loyalty-card .loyalty-icon-wrapper:has(.fa-gift),
+.qc-loyalty-card .loyalty-icon-wrapper:has(.fa-gift) {
+  background: #EEF2FF;
+  border-color: #E0E7FF;
+}
+
+.loyalty-card .loyalty-icon-wrapper i,
+.qc-loyalty-card .loyalty-icon-wrapper i {
+  font-size: 24px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+}
+
+/* Content Area */
+.loyalty-card .loyalty-content,
+.qc-loyalty-card .loyalty-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.loyalty-card .loyalty-title,
+.qc-loyalty-card .loyalty-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--loyalty-text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.loyalty-card .loyalty-subtitle,
+.qc-loyalty-card .loyalty-subtitle {
+  font-size: 14px;
+  color: var(--loyalty-text-muted);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Button Styling */
+.loyalty-card .loyalty-btn,
+.qc-loyalty-card .loyalty-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: var(--loyalty-primary);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(var(--loyalty-primary-rgb), 0.2);
+}
+
+.loyalty-card .loyalty-btn:hover,
+.qc-loyalty-card .loyalty-btn:hover {
+  background-color: #4338CA;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(var(--loyalty-primary-rgb), 0.3);
+}
+
+/* Loyalty Earn Info (Special text for earned points) */
+.loyalty-card .loyalty-earn-info,
+.qc-loyalty-card .loyalty-earn-info {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background: #F0FDF4;
+  border: 1px solid #DCFCE7;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+}
+
+.loyalty-card .loyalty-earn-info i,
+.qc-loyalty-card .loyalty-earn-info i {
+  color: var(--loyalty-green);
+  font-size: 16px;
+}
+
+.loyalty-card .loyalty-earn-info span,
+.qc-loyalty-card .loyalty-earn-info span {
+  font-size: 13px;
+  color: #166534;
+  font-weight: 600;
+}
+
+/* RTL Support */
+[dir="rtl"] .loyalty-card .loyalty-icon-wrapper,
+[dir="rtl"] .qc-loyalty-card .loyalty-icon-wrapper {
+  margin-left: 16px; 
+  margin-right: 0;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .loyalty-card,
+  .qc-loyalty-card {
+    padding: 20px;
+  }
+
+  .qc-loyalty-card .d-flex {
+    flex-wrap: wrap;
+  }
+  
+  .qc-loyalty-card .loyalty-icon-wrapper {
+    margin-bottom: 12px;
+  }
+  
+  .loyalty-card .loyalty-btn,
+  .qc-loyalty-card .loyalty-btn {
+    width: 100%;
+    margin-top: 16px;
+  }
+}
