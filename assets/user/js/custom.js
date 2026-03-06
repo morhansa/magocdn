@@ -112,7 +112,8 @@ $(function ($) {
 
     $.ajaxSetup({
         headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'X-Requested-With': 'XMLHttpRequest'
         }
     });
 
@@ -291,32 +292,98 @@ $(function ($) {
 
     /* ***************************************************
     ==========Form Submit with AJAX Request Start==========
+    Use delegation so submit works for forms loaded via AJAX (e.g. products/items tab=categories).
     ******************************************************/
 
-    $("#submitBtn").on('click', function (e) {
-        $(e.target).attr('disabled', true);
+    // Add Category modal: capture-phase listener so submit works even if other handlers fail
+    (function () {
+        document.addEventListener('click', function (e) {
+            if (!$(e.target).closest('#createCategoryModal #submitBtn').length) return;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            var $form = $('#createCategoryModal').find('form#ajaxForm');
+            if (!$form.length || !$form[0]) return;
+            var $btn = $('#createCategoryModal #submitBtn');
+            $btn.prop('disabled', true);
+            if ($(".request-loader").length) $(".request-loader").addClass("show");
+            var fd = new FormData($form[0]);
+            $.ajax({
+                url: $form.attr('action'),
+                method: ($form.attr('method') || 'POST').toUpperCase(),
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $btn.prop('disabled', false);
+                    if ($(".request-loader").length) $(".request-loader").removeClass("show");
+                    $form.find('.em').html('');
+                    if (data && data.status === 'fail') {
+                        $('#createCategoryModal').modal('hide');
+                        if (typeof bootnotify === 'function') bootnotify(data.message || '', 'Warning', 'warning');
+                        return;
+                    }
+                    if (data && data.redirect) {
+                        window.location.href = data.redirect;
+                        return;
+                    }
+                    if (data === 'success' || (data && !data.redirect)) {
+                        var lang = (new URLSearchParams(window.location.search)).get('language') || '';
+                        window.location.href = window.location.pathname + '?tab=categories' + (lang ? '&language=' + encodeURIComponent(lang) : '');
+                    }
+                },
+                error: function (xhr) {
+                    $btn.prop('disabled', false);
+                    if ($(".request-loader").length) $(".request-loader").removeClass("show");
+                    $form.find('.em').html('');
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        for (var k in xhr.responseJSON.errors) {
+                            var el = document.getElementById('err' + k);
+                            if (el) el.innerHTML = (xhr.responseJSON.errors[k] && xhr.responseJSON.errors[k][0]) ? xhr.responseJSON.errors[k][0] : '';
+                        }
+                    }
+                }
+            });
+        }, true);
+    })();
 
+    $(document).on('click', '#submitBtn', function (e) {
+        var $btn = $(e.currentTarget);
+        var $form = $btn.closest('.modal').length ? $btn.closest('.modal').find('form#ajaxForm') : $('#ajaxForm').first();
+        if (!$form.length) {
+            $form = $('#ajaxForm').first();
+        }
+        // Fallback for modal inside AJAX-loaded content (e.g. products/items tab=categories)
+        if (!$form.length && $btn.closest('#createCategoryModal').length) {
+            $form = $btn.closest('#createCategoryModal').find('form#ajaxForm');
+        }
+        var ajaxForm = $form[0];
+        if (!ajaxForm) {
+            return;
+        }
+
+        $btn.prop('disabled', true);
         $(".request-loader").addClass("show");
 
-        let ajaxForm = document.getElementById('ajaxForm');
         let fd = new FormData(ajaxForm);
-        let url = $("#ajaxForm").attr('action');
-        let method = $("#ajaxForm").attr('method');
+        let url = $form.attr('action');
+        let method = $form.attr('method') || 'POST';
 
-        if ($("#ajaxForm .summernote").length > 0) {
-            $("#ajaxForm .summernote").each(function (i) {
+        if ($form.find('.summernote').length > 0) {
+            $form.find('.summernote').each(function (i) {
                 let index = i;
-                let $toInput = $('.summernote').eq(index);
+                let $toInput = $form.find('.summernote').eq(index);
 
                 let tmcId = $toInput.attr('id');
-                let content = tinyMCE.get(tmcId).getContent();
-
-                fd.delete($(this).attr('name'));
-                fd.append($(this).attr('name'), content);
+                let content = tinyMCE.get(tmcId) ? tinyMCE.get(tmcId).getContent() : '';
+                let name = $(this).attr('name');
+                if (name) {
+                    fd.delete(name);
+                    fd.append(name, content);
+                }
             });
         }
 
-        let blob_image_url = $('#blob_image').text().trim();
+        let blob_image_url = $form.closest('.modal').length ? $form.closest('.modal').find('#blob_image').text().trim() : $('#blob_image').text().trim();
         if (blob_image_url.length > 0) {
             var base64ImageContent = blob_image_url.replace(/^data:image\/(png|jpg);base64,/, "");
             var blob = base64ToBlob(base64ImageContent, 'image/png');
@@ -330,18 +397,34 @@ $(function ($) {
             contentType: false,
             processData: false,
             success: function (data) {
-                $(e.target).attr('disabled', false);
+                $btn.prop('disabled', false);
                 $(".request-loader").removeClass("show");
 
-                $(".em").each(function () {
-                    $(this).html('');
-                })
+                $form.find('.em').html('');
 
                 if (data.status == 'fail') {
                     $('.modal').modal('hide');
                     bootnotify(data.message, 'Warning', 'warning');
                 }
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
+                }
                 if (data == "success") {
+                    var action = $form.attr('action') || '';
+                    var lang = (new URLSearchParams(location.search)).get('language') || '';
+                    if (action.indexOf('itemcategory') !== -1) {
+                        window.location.href = location.pathname + '?tab=categories' + (lang ? '&language=' + encodeURIComponent(lang) : '');
+                        return;
+                    }
+                    if (action.indexOf('itemsubcategory') !== -1) {
+                        window.location.href = location.pathname.replace(/\/items\/?$/, '') + '/subcategories' + (lang ? '?language=' + encodeURIComponent(lang) : '');
+                        return;
+                    }
+                    if (action.indexOf('product.label') !== -1) {
+                        window.location.href = location.pathname + '?tab=labels' + (lang ? '&language=' + encodeURIComponent(lang) : '');
+                        return;
+                    }
                     location.reload();
                 }
 
@@ -367,23 +450,26 @@ $(function ($) {
 
                 // if error occurs
                 else if (typeof data.error != 'undefined') {
+                    $form.find('.em').html('');
                     for (let x in data) {
                         if (x == 'error') {
                             continue;
                         }
-                        document.getElementById('err' + x).innerHTML = data[x][0];
+                        var errEl = document.getElementById('err' + x);
+                        if (errEl) errEl.innerHTML = data[x][0];
                     }
                 }
             },
             error: function (error) {
-                $(".em").each(function () {
-                    $(this).html('');
-                })
-                for (let x in error.responseJSON.errors) {
-                    document.getElementById('err' + x).innerHTML = error.responseJSON.errors[x][0];
+                $form.find('.em').html('');
+                if (error.responseJSON && error.responseJSON.errors) {
+                    for (let x in error.responseJSON.errors) {
+                        var errEl = document.getElementById('err' + x);
+                        if (errEl) errEl.innerHTML = error.responseJSON.errors[x][0];
+                    }
                 }
                 $(".request-loader").removeClass("show");
-                $(e.target).attr('disabled', false);
+                $btn.prop('disabled', false);
             }
         });
     });
@@ -533,6 +619,11 @@ $(function ($) {
         $('.request-loader').addClass('show');
         e.preventDefault();
 
+        // Sync all TinyMCE editors to their textareas before capturing FormData
+        if (typeof tinyMCE !== 'undefined') {
+            tinyMCE.triggerSave();
+        }
+
         let action = $('#itemForm').attr('action');
         let fd = new FormData(document.querySelector('#itemForm'));
 
@@ -552,8 +643,16 @@ $(function ($) {
             success: function (data) {
                 $('.request-loader').removeClass('show');
 
+                if (data && data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
+                }
                 if (data == 'success') {
-                    location.reload();
+                    var path = location.pathname.replace(/\/create\/?$/, '') || location.pathname;
+                    var params = new URLSearchParams(location.search);
+                    params.set('tab', 'list');
+                    window.location.href = path + (params.toString() ? '?' + params.toString() : '');
+                    return;
                 }
                 if (data == "downgrade") {
                     $('.modal').modal('hide');
