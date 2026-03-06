@@ -361,6 +361,38 @@ $(function ($) {
             return;
         }
 
+        // Client-side validation for Add Category modal (createCategoryModal)
+        if ($form.closest('#createCategoryModal').length) {
+            $form.find('.em').html('');
+            var hasName = false;
+            $form.find('input[name$="_name"]').each(function () {
+                if ($.trim($(this).val()).length > 0) { hasName = true; }
+            });
+            var statusVal = $form.find('select[name="status"]').val();
+            var serialVal = $form.find('input[name="serial_number"]').val();
+            var hasImage = $form.find('input[name="image"]')[0] && $form.find('input[name="image"]')[0].files && $form.find('input[name="image"]')[0].files.length > 0;
+            if (!hasName) {
+                var $firstErr = $form.find('input[name$="_name"]').first().closest('.form-group').find('.em').first();
+                if ($firstErr.length) $firstErr.html(typeof err_required !== 'undefined' ? err_required : 'Required');
+                return;
+            }
+            if (!statusVal) {
+                var $errStatus = document.getElementById('errstatus');
+                if ($errStatus) $errStatus.innerHTML = (typeof err_required !== 'undefined' ? err_required : 'Required');
+                return;
+            }
+            if (serialVal === '' && serialVal !== 0) {
+                var $errSerial = document.getElementById('errserial_number');
+                if ($errSerial) $errSerial.innerHTML = (typeof err_required !== 'undefined' ? err_required : 'Required');
+                return;
+            }
+            if (!hasImage) {
+                var $errImage = $form.find('#errimage');
+                if ($errImage.length) $errImage.html(typeof err_required !== 'undefined' ? err_required : 'Required');
+                return;
+            }
+        }
+
         $btn.prop('disabled', true);
         $(".request-loader").addClass("show");
 
@@ -418,7 +450,11 @@ $(function ($) {
                         return;
                     }
                     if (action.indexOf('itemsubcategory') !== -1) {
-                        window.location.href = location.pathname.replace(/\/items\/?$/, '') + '/subcategories' + (lang ? '?language=' + encodeURIComponent(lang) : '');
+                        if (location.pathname.indexOf('/categories') !== -1) {
+                            window.location.href = location.pathname + '?tab=subcategories' + (lang ? '&language=' + encodeURIComponent(lang) : '');
+                        } else {
+                            window.location.href = location.pathname.replace(/\/items\/?$/, '') + '/subcategories' + (lang ? '?language=' + encodeURIComponent(lang) : '');
+                        }
                         return;
                     }
                     if (action.indexOf('product.label') !== -1) {
@@ -470,6 +506,93 @@ $(function ($) {
                 }
                 $(".request-loader").removeClass("show");
                 $btn.prop('disabled', false);
+            }
+        });
+    });
+
+    // Submit button for Add Subcategory modal (unified categories page)
+    $(document).on('click', '#subcategorySubmitBtn', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $btn = $(e.currentTarget);
+        var $form = $('#createSubcategoryModal').find('#subcategoryAjaxForm');
+        if (!$form.length || !$form[0]) return false;
+        var ajaxForm = $form[0];
+        $form.find('.em').html('');
+        var categoryId = $form.find('select[name="category_id"]').val();
+        var hasName = false;
+        $form.find('input[name$="_name"]').each(function () {
+            if ($.trim($(this).val()).length > 0) { hasName = true; }
+        });
+        var statusVal = $form.find('select[name="status"]').val();
+        var serialVal = $form.find('input[name="serial_number"]').val();
+        if (!categoryId) {
+            var errCat = document.getElementById('errcategory_id');
+            if (errCat) errCat.innerHTML = (typeof err_required !== 'undefined' ? err_required : 'Required');
+            return false;
+        }
+        if (!hasName) {
+            var $firstErr = $form.find('input[name$="_name"]').first().closest('.form-group').find('.em').first();
+            if ($firstErr.length) $firstErr.html(typeof err_required !== 'undefined' ? err_required : 'Required');
+            return false;
+        }
+        if (!statusVal) {
+            var errSt = document.getElementById('errstatus');
+            if (errSt) errSt.innerHTML = (typeof err_required !== 'undefined' ? err_required : 'Required');
+            return false;
+        }
+        if (serialVal === '' && serialVal !== 0) {
+            var errSer = document.getElementById('errserial_number');
+            if (errSer) errSer.innerHTML = (typeof err_required !== 'undefined' ? err_required : 'Required');
+            return false;
+        }
+        $btn.prop('disabled', true);
+        $(".request-loader").addClass("show");
+        var fd = new FormData(ajaxForm);
+        var url = $form.attr('action');
+        var method = $form.attr('method') || 'POST';
+        $.ajax({
+            url: url,
+            method: method,
+            data: fd,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                $btn.prop('disabled', false);
+                $(".request-loader").removeClass("show");
+                $form.find('.em').html('');
+                if (data && data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
+                }
+                if (data === "success" || (data && (data === "success" || data.message === "success"))) {
+                    $('#createSubcategoryModal').modal('hide');
+                    var lang = (new URLSearchParams(location.search)).get('language') || '';
+                    if (location.pathname.indexOf('/categories') !== -1) {
+                        window.location.href = location.pathname + '?tab=subcategories' + (lang ? '&language=' + encodeURIComponent(lang) : '');
+                    } else {
+                        window.location.href = location.pathname.replace(/\/items\/?$/, '') + '/subcategories' + (lang ? '?language=' + encodeURIComponent(lang) : '');
+                    }
+                    return;
+                }
+                if (data && typeof data.error !== 'undefined') {
+                    for (var x in data) {
+                        if (x === 'error') continue;
+                        var errEl = document.getElementById('err' + x);
+                        if (errEl && data[x] && data[x][0]) errEl.innerHTML = data[x][0];
+                    }
+                }
+            },
+            error: function (xhr) {
+                $btn.prop('disabled', false);
+                $(".request-loader").removeClass("show");
+                $form.find('.em').html('');
+                if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    for (var x in xhr.responseJSON.errors) {
+                        var errEl = document.getElementById('err' + x);
+                        if (errEl) errEl.innerHTML = xhr.responseJSON.errors[x][0];
+                    }
+                }
             }
         });
     });
@@ -1098,6 +1221,8 @@ $(function ($) {
                 });
 
                 let fd = new FormData();
+                let token = $('meta[name="csrf-token"]').attr('content');
+                if (token) fd.append('_token', token);
                 for (let i = 0; i < ids.length; i++) {
                     fd.append('ids[]', ids[i]);
                 }
@@ -1108,6 +1233,7 @@ $(function ($) {
                     data: fd,
                     contentType: false,
                     processData: false,
+                    headers: token ? { 'X-CSRF-TOKEN': token } : {},
                     success: function (data) {
 
                         $(".request-loader").removeClass('show');
