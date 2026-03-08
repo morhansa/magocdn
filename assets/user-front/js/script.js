@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const productSlider5 = actualContent.querySelector(".product-slider-md");
                     const productSlider6 = actualContent.querySelector(".flash-slider");
                     const productSlider7 = actualContent.querySelector(".product-inline-slider");
+                    const productSliderSalla = actualContent.querySelector('#salla-flash-slider');
 
                     // Show the actual content by changing display first
                     actualContent.style.display = "block";
@@ -72,6 +73,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                     if (productSlider7 && productSlider7.classList.contains('slick-initialized')) {
                         $(productSlider7).slick('setPosition');
+                    }
+                    if (productSliderSalla && productSliderSalla.classList.contains('slick-initialized')) {
+                        $(productSliderSalla).slick('setPosition');
                     }
 
                     // Hide skeleton after content is fully visible
@@ -524,9 +528,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /*===========================================
-        Nice Select
+        Nice Select (exclude Quick Checkout selects - they are filled dynamically)
     ============================================*/
-    $("select").niceSelect();
+    $("select").not(".qc-select").niceSelect();
 
 
     lazyLoad();
