@@ -138,23 +138,29 @@
 
         let langid = $(this).val();
 
-        $("#bcategory").removeAttr('disabled');
-        var bcategoryUrl = (typeof category_url !== 'undefined') ? (category_url + '?language_id=' + langid) : (mainurl + "/admin/blog/" + langid + "/getcats");
-        $.get(bcategoryUrl, function (data) {
-            var selectText = (typeof select_a_category !== 'undefined') ? select_a_category : 'Select a category';
-            var options = '<option value="" disabled selected>' + selectText + '</option>';
-            if (Array.isArray(data)) {
-                for (var i = 0; i < data.length; i++) {
-                    var item = data[i];
-                    var val = (item && (item.unique_id != null && item.unique_id !== '')) ? item.unique_id : (item && item.id);
-                    var name = (item && item.name != null) ? item.name : '';
-                    if (val != null && val !== '' && val !== undefined) {
-                        options += '<option value="' + String(val).replace(/"/g, '&quot;') + '">' + String(name).replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</option>';
+        if ($("#bcategory").length) {
+            $("#bcategory").removeAttr('disabled');
+            var bcategoryUrl = (typeof category_url !== 'undefined') ? (category_url + '?language_id=' + encodeURIComponent(langid)) : (mainurl + "/admin/blog/" + langid + "/getcats");
+            $.get(bcategoryUrl)
+                .done(function (data) {
+                    var selectText = (typeof select_a_category !== 'undefined') ? select_a_category : 'Select a category';
+                    var options = '<option value="" disabled selected>' + selectText + '</option>';
+                    if (Array.isArray(data)) {
+                        for (var i = 0; i < data.length; i++) {
+                            var item = data[i];
+                            var val = (item && (item.unique_id != null && item.unique_id !== '')) ? item.unique_id : (item && item.id);
+                            var name = (item && item.name != null) ? item.name : '';
+                            if (val != null && val !== '' && val !== undefined) {
+                                options += '<option value="' + String(val).replace(/"/g, '&quot;') + '">' + String(name).replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</option>';
+                            }
+                        }
                     }
-                }
-            }
-            $("#bcategory").html(options);
-        });
+                    $("#bcategory").html(options);
+                })
+                .fail(function () {
+                    $(".request-loader").removeClass("show");
+                });
+        }
 
         if ($(this).parents('form').hasClass('create')) {
             $.get(mainurl + "/admin/rtlcheck/" + $(this).val(), function (data) {
