@@ -4,7 +4,7 @@
 // with the value my-dropzone (or myDropzone)
 Dropzone.options.myDropzone = {
     acceptedFiles: '.png, .jpg, .jpeg',
-    url: uploadSliderImage,
+    url: (typeof uploadSliderImage !== 'undefined' ? uploadSliderImage : window.uploadSliderImage) || '',
     success: function (file, response) {
         $("#sliders").append(`<input type="hidden" name="image[]" id="slider${response.file_id}" value="${response.file_id}">`);
         // Create the remove button
@@ -31,8 +31,9 @@ Dropzone.options.myDropzone = {
 
 function rmvImg(file_Id) {
     const csrf = document.querySelector('meta[name="csrf-token"]').content;
+    var url = (typeof rmvSliderImage !== 'undefined' ? rmvSliderImage : window.rmvSliderImage) || '';
     $.ajax({
-        url: rmvSliderImage,
+        url: url,
         type: 'POST',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: { 'value': file_Id, '_token': csrf },
@@ -47,8 +48,9 @@ function rmvImg(file_Id) {
 
 function rmvdbimg(key, id) {
     $(".request-loader").addClass("show");
+    var url = (typeof rmvDbSliderImage !== 'undefined' ? rmvDbSliderImage : window.rmvDbSliderImage) || '';
     $.ajax({
-        url: rmvDbSliderImage,
+        url: url,
         type: 'POST',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: {
