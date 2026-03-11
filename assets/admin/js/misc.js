@@ -140,7 +140,28 @@
 
         if ($("#bcategory").length) {
             $("#bcategory").removeAttr('disabled');
-            var bcategoryUrl = (typeof category_url !== 'undefined') ? (category_url + '?language_id=' + encodeURIComponent(langid)) : (mainurl + "/admin/blog/" + langid + "/getcats");
+            var bcategoryUrl = null;
+            var formWithBcategory = $("#bcategory").closest('form');
+            var formAction = formWithBcategory.length ? (formWithBcategory.attr('action') || '') : '';
+            if (formAction && formAction.indexOf('/blog/store') !== -1) {
+                var adminBlogBase = formAction.replace(/\/store\/?$/, '');
+                bcategoryUrl = adminBlogBase + '/' + encodeURIComponent(langid) + '/getcats';
+            }
+            if (!bcategoryUrl) {
+                var catUrl = (typeof category_url !== 'undefined' && category_url) ? category_url : (typeof window.category_url !== 'undefined' && window.category_url) ? window.category_url : null;
+                if (!catUrl && typeof window.location !== 'undefined' && window.location.pathname) {
+                    var path = window.location.pathname.replace(/\/create\/?$/, '').replace(/\/edit\/[^/]+$/, '').replace(/\/$/, '');
+                    if (/\/posts(\/|$)/.test(path)) {
+                        catUrl = window.location.origin + path + (path.slice(-1) === '/' ? '' : '/') + 'getcats';
+                    } else if (/\/blog(\/|$)/.test(path)) {
+                        var segments = window.location.pathname.split('/').filter(Boolean);
+                        var prefix = segments[0] || 'user';
+                        catUrl = window.location.origin + '/' + prefix + '/pages/blog/posts/getcats';
+                    }
+                }
+                if (!catUrl && typeof mainurl !== 'undefined') catUrl = mainurl + '/user/pages/blog/posts/getcats';
+                bcategoryUrl = catUrl ? (catUrl + (catUrl.indexOf('?') !== -1 ? '&' : '?') + 'language_id=' + encodeURIComponent(langid)) : (mainurl + "/user/pages/blog/posts/getcats?language_id=" + encodeURIComponent(langid));
+            }
             $.get(bcategoryUrl)
                 .done(function (data) {
                     var selectText = (typeof select_a_category !== 'undefined') ? select_a_category : 'Select a category';
