@@ -139,13 +139,21 @@
         let langid = $(this).val();
 
         $("#bcategory").removeAttr('disabled');
-        $.get(mainurl + "/admin/blog/" + langid + "/getcats", function (data) {
-            let options = `<option value="" disabled selected>${select_a_category}</option>`;
-            for (let i = 0; i < data.length; i++) {
-                options += `<option value="${data[i].id}">${data[i].name}</option>`;
+        var bcategoryUrl = (typeof category_url !== 'undefined') ? (category_url + '?language_id=' + langid) : (mainurl + "/admin/blog/" + langid + "/getcats");
+        $.get(bcategoryUrl, function (data) {
+            var selectText = (typeof select_a_category !== 'undefined') ? select_a_category : 'Select a category';
+            var options = '<option value="" disabled selected>' + selectText + '</option>';
+            if (Array.isArray(data)) {
+                for (var i = 0; i < data.length; i++) {
+                    var item = data[i];
+                    var val = (item && (item.unique_id != null && item.unique_id !== '')) ? item.unique_id : (item && item.id);
+                    var name = (item && item.name != null) ? item.name : '';
+                    if (val != null && val !== '' && val !== undefined) {
+                        options += '<option value="' + String(val).replace(/"/g, '&quot;') + '">' + String(name).replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</option>';
+                    }
+                }
             }
             $("#bcategory").html(options);
-
         });
 
         if ($(this).parents('form').hasClass('create')) {
