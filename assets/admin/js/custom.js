@@ -191,11 +191,17 @@ $(function ($) {
     $(".summernote").each(function (i) {
         tinymce.init({
             selector: '.summernote',
-            plugins: 'autolink charmap emoticons image link lists media searchreplace table visualblocks wordcount directionality',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | ltr rtl',
+            plugins: 'autolink charmap emoticons image link lists media searchreplace table visualblocks wordcount directionality code codesample fullscreen',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | ltr rtl | code fullscreen',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
             promotion: false,
+            // Enable raw HTML source editing — admin-only so this is safe
+            valid_elements: '*[*]',
+            extended_valid_elements: '*[*]',
+            valid_children: '+body[style], *[*]',
+            verify_html: false,
+            cleanup: false,
             mergetags_list: [
                 { value: 'First.Name', title: 'First Name' },
                 { value: 'Email', title: 'Email' },
