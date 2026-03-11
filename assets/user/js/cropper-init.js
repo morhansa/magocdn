@@ -52,14 +52,9 @@ $(document).ready(function () {
           }
         });
 
-        // Prevent zoom on mouse scroll
-        $(document).on('wheel', function (e) {
-          if ($(e.target).closest('.cropper-container').length) {
-            e.preventDefault();
-          }
-        });
         $('.destroy-cropper').removeClass('d-none');
         $('.thumbnail-step2-hint').removeClass('d-none');
+        $('.thumbnail-zoom-hint').removeClass('d-none');
       });
     };
 
@@ -74,19 +69,21 @@ $(document).ready(function () {
         width: 255, // set output width
         height: 255, // set output height
       });
-      // Set cropped canvas as src for .uploaded-img-2
+      // Set cropped canvas as src for .cropped-thumbnail-image
       $('.cropped-thumbnail-image').attr('src', canvas.toDataURL());
 
       $('.uploaded-thumbnail-img').attr('src', $('.uploaded-thumbnail-img').attr('data-no_image'));
 
       // Destroy cropper instance
       cropper.destroy();
-      cropper = null; // Clear cropper variable
+      cropper = null;
 
-      // Unbind load event to prevent re-initialization
       $('.cropped-thumbnail-image').off('load');
       $('.destroy-cropper').addClass('d-none');
       $('.thumbnail-step2-hint').addClass('d-none');
+      $('.thumbnail-zoom-hint').addClass('d-none');
     }
+    // Reset file input so tenant can choose another image (or same) without errors
+    $('.thumbnail-input').val('');
   });
 });
