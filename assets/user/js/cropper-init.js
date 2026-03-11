@@ -1,9 +1,21 @@
 "use strict";
 $(document).ready(function () {
   let cropper; // Declare cropper variable globally to access it
+  var THUMBNAIL_MAX_SIZE_BYTES = 5 * 1024 * 1024; // 5MB - avoid loading huge files (security-and-scalability)
 
   $('.thumbnail-input').change(function (event) {
     let file = event.target.files[0];
+    if (!file) return;
+    if (file.size > THUMBNAIL_MAX_SIZE_BYTES) {
+      var msg = (typeof window.thumbnailMaxSizeMessage !== 'undefined' && window.thumbnailMaxSizeMessage) ? window.thumbnailMaxSizeMessage : 'Image must not exceed 5MB.';
+      if (typeof bootnotify === 'function') {
+        bootnotify(msg, 'Warning', 'warning');
+      } else {
+        alert(msg);
+      }
+      $(this).val('');
+      return;
+    }
     let reader = new FileReader();
 
     reader.onload = function (e) {
@@ -47,6 +59,7 @@ $(document).ready(function () {
           }
         });
         $('.destroy-cropper').removeClass('d-none');
+        $('.thumbnail-step2-hint').removeClass('d-none');
       });
     };
 
@@ -73,6 +86,7 @@ $(document).ready(function () {
       // Unbind load event to prevent re-initialization
       $('.cropped-thumbnail-image').off('load');
       $('.destroy-cropper').addClass('d-none');
+      $('.thumbnail-step2-hint').addClass('d-none');
     }
   });
 });
