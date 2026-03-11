@@ -750,6 +750,25 @@ $(function ($) {
         let action = $('#itemForm').attr('action');
         let fd = new FormData(document.querySelector('#itemForm'));
 
+        // Ensure Summernote/TinyMCE content is in FormData (blog create/edit: avoid undefined or stale textarea)
+        if ($('#itemForm').find('.summernote').length > 0) {
+            $('#itemForm').find('.summernote').each(function (i) {
+                let $el = $(this);
+                let name = $el.attr('name');
+                let content = '';
+                let tmcId = $el.attr('id');
+                if (tmcId && typeof tinyMCE !== 'undefined' && tinyMCE.get(tmcId)) {
+                    content = tinyMCE.get(tmcId).getContent() || '';
+                } else {
+                    content = $el.val() || '';
+                }
+                if (name) {
+                    fd.delete(name);
+                    fd.append(name, content);
+                }
+            });
+        }
+
         let blob_image_url = $('#blob_image').text().trim();
         if (blob_image_url.length > 0) {
             var base64ImageContent = blob_image_url.replace(/^data:image\/(png|jpg);base64,/, "");
