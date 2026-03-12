@@ -432,12 +432,32 @@ $(document).ready(function () {
     }, 1000);
 });
 
+// Helper: get variant parts from input (supports data-* for names with " or :)
+function getVariantPartsFromInput($input) {
+    var name = $input.data('option-name');
+    var price = parseFloat($input.data('price'));
+    var stock = parseInt($input.data('stock'), 10);
+    var optionId = parseInt($input.data('option-id'), 10);
+    var variationId = parseInt($input.data('variation-id'), 10);
+    if (name === undefined || isNaN(price)) {
+        var v = $input.val().split(":");
+        if (v.length >= 5) {
+            name = v[0];
+            price = parseFloat(v[1]);
+            stock = parseFloat(v[2]);
+            optionId = parseInt(v[3], 10);
+            variationId = parseInt(v[4], 10);
+        }
+    }
+    return { name: name, price: price, stock: stock, option_id: optionId, variation_id: variationId };
+}
+
 $('body').on('click', '.product-variant', function () {
-    var price = parseFloat($('#new-price').attr('data-base_price'));
+    var price = parseFloat($('#details_new-price').attr('data-base_price')) || parseFloat($('#new-price').attr('data-base_price')) || 0;
     if ($('#details_old-price').length > 0) {
         var old_price = $('#details_old-price').attr('data-old_price');
     }
-    var quantity = $("input[name='cart-amount']").val();
+    var quantity = parseInt($("input[name='cart-amount']").val(), 10) || 1;
     let errorCount = 0;
     let errMessage = [];
 
@@ -448,14 +468,13 @@ $('body').on('click', '.product-variant', function () {
         var $li_child_input = $ul_child.find('li input:checked');
 
         $li_child_input.each(function () {
-            var value = $(this).val();
-            var values = value.split(":");
-            if (parseFloat(values[2]) < quantity) {
+            var parts = getVariantPartsFromInput($(this));
+            if (parts.stock < quantity) {
                 return false;
             } else {
-                price = price + parseFloat(values[1]);
+                price = price + (parts.price || 0);
                 if ($('#details_old-price').length > 0) {
-                    old_price = parseFloat(old_price) + parseFloat(values[1]);
+                    old_price = parseFloat(old_price) + (parts.price || 0);
                 }
             }
         });
@@ -584,11 +603,40 @@ function addToCartDetails() {
 //for product detail page
 function addToCartDetails2() {
     $(".request-loader").addClass("show");
+
+    // CRITICAL FIX: Initialize detail_new_price from DOM inside function
+    // This ensures the value is always fresh and not undefined
+    let detail_new_price_element = $('#details_new-price');
+    if (detail_new_price_element.length > 0) {
+        detail_new_price = parseFloat(detail_new_price_element.attr('data-base_price')) || parseFloat(detail_new_price_element.text()) || 0;
+    } else {
+        console.error('Add to Cart Error: #details_new-price element not found');
+        toastr["error"]("حدث خطأ في تحميل السعر. يرجى تحديث الصفحة.");
+        $(".request-loader").removeClass("show");
+        return;
+    }
+
     let $input = $(".item_quantity_details input");
-    let qty = parseInt($input.val());
+    let qty = parseInt($input.val()) || 1;
     let item_id = $('#details_item_id').val();
+
+    if (!item_id) {
+        console.error('Add to Cart Error: item_id not found');
+        toastr["error"]("حدث خطأ. يرجى تحديث الصفحة.");
+        $(".request-loader").removeClass("show");
+        return;
+    }
+
     let url = mainurl + "/add-to-cart/" + item_id;
     let final_price = totalPriceDetails2(qty);
+
+    // Validate final_price is a valid number
+    if (isNaN(final_price) || final_price <= 0) {
+        console.error('Add to Cart Error: Invalid final_price', final_price);
+        toastr["error"]("حدث خطأ في حساب السعر. يرجى تحديث الصفحة.");
+        $(".request-loader").removeClass("show");
+        return;
+    }
 
     if (stErr > 0) {
         stErrMsg.forEach(msg => {
@@ -609,6 +657,10 @@ function addToCartDetails2() {
             } else {
                 toastr["error"](res.error);
             }
+            $(".request-loader").removeClass("show");
+        }).fail(function (xhr, status, error) {
+            console.error('Add to Cart AJAX Error:', error, xhr.responseText);
+            toastr["error"]("حدث خطأ أثناء إضافة المنتج للسلة. يرجى المحاولة مرة أخرى.");
             $(".request-loader").removeClass("show");
         });
     }
@@ -664,6 +716,22 @@ $(document).on("click", ".item_quantity_details .minus", function () {
 
 //function for product details page
 function totalPriceDetails2(qty) {
+    // CRITICAL FIX: Read prices from DOM elements instead of global variables
+    // This prevents undefined/NaN errors
+    var detail_new_price_element = $('#details_new-price');
+    var detail_old_price_element = $('#details_old-price');
+
+    // Get base price from data attribute or text content
+    var current_detail_new_price = 0;
+    if (detail_new_price_element.length > 0) {
+        current_detail_new_price = parseFloat(detail_new_price_element.attr('data-base_price')) || parseFloat(detail_new_price_element.text()) || 0;
+    }
+
+    var current_detail_old_price = 0;
+    if (detail_old_price_element.length > 0) {
+        current_detail_old_price = parseFloat(detail_old_price_element.attr('data-old_price')) || 0;
+    }
+
     var previous_price = 0;
     qty = qty.toString().length > 0 ? qty : 0;
     var variant_price = [];
@@ -680,22 +748,17 @@ function totalPriceDetails2(qty) {
         var $li_child_input = $ul_child.find('li input:checked');
 
         $li_child_input.each(function (j, li) {
-            var selected_variant = $(this).val();
-            /*user data-variant_name price to avoid split.*/
-
-            var v = selected_variant.split(":");
-
+            var parts = getVariantPartsFromInput($(this));
             variant[variant_name] = {
-                'name': v[0],
-                'price': parseFloat(v[1]),
-                'stock': parseFloat(v[2]),
-                'option_id': parseInt(v[3]),
-                'variation_id': parseInt(v[4]),
+                'name': parts.name,
+                'price': parts.price,
+                'stock': parts.stock,
+                'option_id': parts.option_id,
+                'variation_id': parts.variation_id,
             };
-
-            variant_price.push(parseFloat(v[1]));
-            if (parseFloat(v[2]) < qty) {
-                stErrMsg.push(variant_name + ' : ' + v[0] + " ; " + stock_unavailable);
+            variant_price.push(parts.price || 0);
+            if ((parts.stock || 0) < qty) {
+                stErrMsg.push(variant_name + ' : ' + (parts.name || '') + " ; " + stock_unavailable);
                 stErr = 1;
                 return false;
             }
@@ -704,8 +767,8 @@ function totalPriceDetails2(qty) {
         variant_flag++;
     });
 
-    var total = detail_new_price;
-    var old_total = detail_old_price;
+    var total = current_detail_new_price;
+    var old_total = current_detail_old_price;
     for (var i = 0; i < variant_price.length; i++) {
         total += variant_price[i];
         old_total += variant_price[i];
@@ -764,19 +827,23 @@ function cartDropdown() {
 
 
 function cartDropdownCount() {
-    let route = mainurl + '/cart/dropdown/count';
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    var route = mainurl + '/cart/dropdown/count';
+    var token = (typeof $ !== 'undefined' && $('meta[name="csrf-token"]').length) ? $('meta[name="csrf-token"]').attr('content') : '';
     $.ajax({
         url: route,
         method: 'POST',
+        headers: token ? { 'X-CSRF-TOKEN': token } : {},
+        data: token ? { _token: token } : {},
         success: function (data) {
             $(".cart-dropdown-count").text(data);
         },
-        error: function (error) {
+        error: function (xhr) {
+            if (xhr.status === 419) {
+                // Session/CSRF expired — optionally reload to refresh token
+                if (typeof window.__cartDropdownCountReload !== 'undefined' && window.__cartDropdownCountReload) {
+                    window.location.reload();
+                }
+            }
         }
     });
 }
