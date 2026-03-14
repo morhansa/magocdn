@@ -275,11 +275,16 @@ $('body').on('click', '.btn-wishlist', function (e) {
     $(document).on('click', '.item-remove', function () {
         $(".request-loader").addClass("show");
         let removeItemUrl = $(this).attr('data-href');
-        $.get(removeItemUrl, function (res) {
-            if (res.message == 'remove_from_wishlist') {
-                location.reload();
-            } else {
-                if (res.message) {
+        $.ajax({
+            url: removeItemUrl,
+            type: 'GET',
+            dataType: 'json',
+            success: function (res) {
+                if (res && res.message == 'remove_from_wishlist') {
+                    location.reload();
+                    return;
+                }
+                if (res && res.message) {
                     $("#refreshDiv").load(location.href + " #refreshDiv");
                     $("#refreshButton").load(location.href + " #refreshButton");
                     $("#cartQuantity").load(location.href + " #cartQuantity");
@@ -287,13 +292,18 @@ $('body').on('click', '.btn-wishlist', function (e) {
                     cartDropdown();
                     toastr["error"](res.message);
                 } else {
-                    toastr["error"](res.error);
+                    toastr["error"]((res && res.error) ? res.error : (typeof res === 'string' ? res : ''));
                 }
+                $(".request-loader").removeClass("show");
+            },
+            error: function (xhr) {
+                var msg = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : (xhr.statusText || 'Request failed');
+                toastr["error"](msg);
+                $(".request-loader").removeClass("show");
             }
-            $(".request-loader").removeClass("show");
         });
     });
-    // ================ cart item remove js start =======================//
+    // ================ cart item remove js end =======================//
 
     $('body').on('click', '.addclick', function () {
         let orderamount = $('#detailsQuantity').val();
