@@ -640,6 +640,36 @@ function addToCartDetails2() {
     let url = mainurl + "/add-to-cart/" + item_id;
     let final_price = totalPriceDetails2(qty);
 
+    // Service Requirements: block add-to-cart unless required fields are filled (product details page).
+    // Note: these fields are outside a <form>, so native required validation won't trigger automatically.
+    let serviceReqSection = document.getElementById('serviceRequirementsSection');
+    let serviceReqPayload = null;
+    if (serviceReqSection) {
+        serviceReqPayload = {};
+        let missing = [];
+        let inputs = serviceReqSection.querySelectorAll('input[name^="service_requirements["], textarea[name^="service_requirements["]');
+        inputs.forEach(function (el) {
+            let name = el.getAttribute('name') || '';
+            let m = name.match(/^service_requirements\[(\d+)\]$/);
+            if (!m) return;
+            let idx = m[1];
+            let val = (el.value || '').trim();
+            serviceReqPayload[idx] = val;
+            if (el.hasAttribute('required') && val === '') {
+                missing.push(el);
+            }
+        });
+        if (missing.length > 0) {
+            toastr["error"]("يرجى تعبئة بيانات الخدمة المطلوبة قبل إضافة المنتج إلى السلة.");
+            try {
+                serviceReqSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (e) {}
+            missing[0].focus();
+            $(".request-loader").removeClass("show");
+            return;
+        }
+    }
+
     // Validate final_price is a valid number
     if (isNaN(final_price) || final_price <= 0) {
         console.error('Add to Cart Error: Invalid final_price', final_price);
@@ -655,8 +685,8 @@ function addToCartDetails2() {
         $(".request-loader").removeClass("show");
     } else {
         let cartUrl = url;
-
-        $.get(cartUrl + ',,,' + qty + ',,,' + final_price + ',,,' + JSON.stringify(variant), function (res) {
+        let reqJson = serviceReqPayload ? encodeURIComponent(JSON.stringify(serviceReqPayload)) : '';
+        $.get(cartUrl + ',,,' + qty + ',,,' + final_price + ',,,' + JSON.stringify(variant) + ',,,' + reqJson, function (res) {
             if (res.message) {
                 toastr["success"](res.message);
                 $("#cartQuantity").load(location.href + " #cartQuantity");
