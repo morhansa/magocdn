@@ -4,7 +4,7 @@
 // with the value my-dropzone (or myDropzone)
 Dropzone.options.myDropzone = {
     acceptedFiles: '.png, .jpg, .jpeg',
-    url: (typeof uploadSliderImage !== 'undefined' ? uploadSliderImage : window.uploadSliderImage) || '',
+    url: uploadSliderImage,
     success: function (file, response) {
         $("#sliders").append(`<input type="hidden" name="image[]" id="slider${response.file_id}" value="${response.file_id}">`);
         // Create the remove button
@@ -29,11 +29,24 @@ Dropzone.options.myDropzone = {
     }
 };
 
+/**
+ * Manual init for Turbo/Turbolinks: autoDiscover is disabled globally (see layout scripts).
+ * Safe to call repeatedly; skips if #my-dropzone is missing or already attached.
+ */
+window.initSliderDropzoneForTurbo = function () {
+    if (typeof Dropzone === 'undefined') return;
+    var el = document.getElementById('my-dropzone');
+    if (!el || el.dropzone) return;
+    new Dropzone(el, Dropzone.options.myDropzone);
+};
+
+// First paint / script evaluation after Turbo body swap (turbo:load also calls this)
+window.initSliderDropzoneForTurbo();
+
 function rmvImg(file_Id) {
     const csrf = document.querySelector('meta[name="csrf-token"]').content;
-    var url = (typeof rmvSliderImage !== 'undefined' ? rmvSliderImage : window.rmvSliderImage) || '';
     $.ajax({
-        url: url,
+        url: rmvSliderImage,
         type: 'POST',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: { 'value': file_Id, '_token': csrf },
@@ -48,9 +61,8 @@ function rmvImg(file_Id) {
 
 function rmvdbimg(key, id) {
     $(".request-loader").addClass("show");
-    var url = (typeof rmvDbSliderImage !== 'undefined' ? rmvDbSliderImage : window.rmvDbSliderImage) || '';
     $.ajax({
-        url: url,
+        url: rmvDbSliderImage,
         type: 'POST',
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         data: {
