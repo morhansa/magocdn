@@ -1,0 +1,158 @@
+/* Order bump — storefront (quick + standard checkout) */
+.order-bump-card {
+  margin: 0 0 1.1rem;
+}
+
+.order-bump-card__label {
+  display: block;
+  margin: 0;
+  cursor: pointer;
+  border: 1px dashed rgba(15, 23, 42, 0.2);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  overflow: hidden;
+}
+
+.order-bump-card__label:hover {
+  border-color: rgba(99, 102, 241, 0.45);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08);
+  background: linear-gradient(180deg, #fafbff 0%, #eef2ff 55%, #f8fafc 100%);
+}
+
+.order-bump-card__label:focus-within {
+  outline: 2px solid rgba(99, 102, 241, 0.35);
+  outline-offset: 2px;
+}
+
+.order-bump-card__ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 12px;
+  background: linear-gradient(90deg, #4f46e5 0%, #6366f1 45%, #0ea5e9 100%);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.order-bump-card__ribbon-text {
+  text-align: center;
+}
+
+.order-bump-card__body {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px 14px;
+}
+
+.order-bump-card__check {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 16px;
+  accent-color: #4f46e5;
+  cursor: pointer;
+}
+
+.order-bump-card__thumb-wrap {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #fff;
+  margin-top: 2px;
+}
+
+.order-bump-card__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.order-bump-card__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-bump-card__eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #6366f1;
+  line-height: 1.2;
+}
+
+.order-bump-card__subline {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  line-height: 1.35;
+}
+
+.order-bump-card__title {
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.order-bump-card__summary {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+}
+
+.order-bump-card__price {
+  flex-shrink: 0;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+  align-self: center;
+}
+
+.order-bump-card__price-plus {
+  font-weight: 700;
+  color: #6366f1;
+  margin-inline-end: 2px;
+}
+
+/* Legacy quick-checkout class aliases (if referenced elsewhere) */
+.qc-order-bump {
+  margin: 0 0 1rem;
+}
+
+@media (max-width: 576px) {
+  .order-bump-card__body {
+    flex-wrap: wrap;
+  }
+  .order-bump-card__price {
+    width: 100%;
+    text-align: end;
+    margin-top: 4px;
+  }
+}
