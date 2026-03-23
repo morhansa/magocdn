@@ -119,152 +119,144 @@ $('body').on('click', '.couponBtn', function (e) {
     applyCoupon();
 })
 // apply coupon functionality ends
-$(document).on('click', '.shipping-charge', function () {
-    // Get shipping ID from the radio button value
-    const shippingId = $(this).val();
-    const shippingCharge = parseFloat($(this).attr('data'));
-    const $clickedElement = $(this); // [IMPROVED] Store reference for error handling
-    
-    // Call server-side recalculation to get accurate tax and totals
-    // This ensures tax is calculated correctly: (Subtotal - Discount + Shipping) × TaxRate
+
+function getCheckoutRecalculateAjaxData() {
+    var $sel = $('input[name="shipping_charge"]:checked');
+    var shippingId = $sel.val();
+    var shippingCharge = parseFloat($sel.attr('data')) || 0;
+    var data = {
+        shipping_id: shippingId,
+        shipping_charge: shippingCharge,
+        billing_email: $('#email').length ? ($('#email').val() || '') : '',
+        billing_phone: $('#phone').length ? ($('#phone').val() || '') : ''
+    };
+    if (typeof window.getOrderBumpRecalculateExtra === 'function') {
+        $.extend(data, window.getOrderBumpRecalculateExtra());
+    }
+    return data;
+}
+
+function applyCheckoutRecalculateResponse(response) {
+    if (!response.success) {
+        return;
+    }
+    if (response.subtotal !== undefined) {
+        $('.subtotal').attr('data', response.subtotal);
+        $('.subtotal').text(
+            (ucurrency_position == 'left' ? ucurrency_symbol : '') +
+            parseFloat(response.subtotal).toFixed(2) +
+            (ucurrency_position == 'right' ? ucurrency_symbol : '')
+        );
+    }
+    if (response.discount !== undefined) {
+        var $discountRow = $('.service-charge-list li').first();
+        if ($discountRow.length) {
+            var $discountSpan = $discountRow.find('.price span[data]');
+            if ($discountSpan.length) {
+                $discountSpan.attr('data', response.discount);
+                $discountSpan.text(
+                    (ucurrency_position == 'left' ? ucurrency_symbol : '') +
+                    parseFloat(response.discount).toFixed(2) +
+                    (ucurrency_position == 'right' ? ucurrency_symbol : '')
+                );
+            }
+        }
+    }
+    if (response.shipping !== undefined) {
+        $('.shipping').attr('data', response.shipping);
+        $('.shipping').text(
+            (ucurrency_position == 'left' ? ucurrency_symbol : '') +
+            parseFloat(response.shipping).toFixed(2) +
+            (ucurrency_position == 'right' ? ucurrency_symbol : '')
+        );
+    }
+    if (response.tax !== undefined) {
+        $('#tax').attr('data-tax', response.tax);
+        $('#tax').text(
+            (ucurrency_position == 'left' ? ucurrency_symbol : '') +
+            parseFloat(response.tax).toFixed(2) +
+            (ucurrency_position == 'right' ? ucurrency_symbol : '')
+        );
+    }
+    if (response.tax_rate !== undefined) {
+        var taxLabel = $('#tax_label');
+        if (taxLabel.length) {
+            var taxText = taxLabel.text().replace(/\(\d+%\)/, '(' + Math.round(response.tax_rate) + '%)');
+            taxLabel.text(taxText);
+        }
+    }
+    if (response.grand_total !== undefined) {
+        $('.grandTotal').attr('data', response.grand_total);
+        $('.grandTotal').text(
+            (ucurrency_position == 'left' ? ucurrency_symbol : '') +
+            parseFloat(response.grand_total).toFixed(2) +
+            (ucurrency_position == 'right' ? ucurrency_symbol : '')
+        );
+    }
+    if (typeof refreshPaymentGateways === 'function') {
+        refreshPaymentGateways();
+    }
+}
+
+function recalculateCheckoutCart() {
+    var $clickedElement = $('input[name="shipping_charge"]:checked');
     $.ajax({
         url: recalculate_url || '/checkout/recalculate',
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        data: {
-            shipping_id: shippingId,
-            shipping_charge: shippingCharge
+        data: getCheckoutRecalculateAjaxData(),
+        success: function (response) {
+            applyCheckoutRecalculateResponse(response);
         },
-        success: function(response) {
-            if (response.success) {
-                // Update subtotal
-                if (response.subtotal !== undefined) {
-                    $('.subtotal').attr('data', response.subtotal);
-                    $('.subtotal').text(
-                        (ucurrency_position == 'left' ? ucurrency_symbol : '') +
-                        parseFloat(response.subtotal).toFixed(2) +
-                        (ucurrency_position == 'right' ? ucurrency_symbol : '')
-                    );
-                }
-                
-                // Update discount
-                if (response.discount !== undefined) {
-                    // Find the discount row in service-charge-list (first li after cart total)
-                    const $discountRow = $('.service-charge-list li').first();
-                    if ($discountRow.length) {
-                        const $discountSpan = $discountRow.find('.price span[data]');
-                        if ($discountSpan.length) {
-                            $discountSpan.attr('data', response.discount);
-                            $discountSpan.text(
-                                (ucurrency_position == 'left' ? ucurrency_symbol : '') +
-                                parseFloat(response.discount).toFixed(2) +
-                                (ucurrency_position == 'right' ? ucurrency_symbol : '')
-                            );
-                        }
-                    }
-                }
-                
-                // Update shipping
-                if (response.shipping !== undefined) {
-                    $('.shipping').attr('data', response.shipping);
-                    $('.shipping').text(
-                        (ucurrency_position == 'left' ? ucurrency_symbol : '') +
-                        parseFloat(response.shipping).toFixed(2) +
-                        (ucurrency_position == 'right' ? ucurrency_symbol : '')
-                    );
-                }
-                
-                // Update tax (uses dynamic tax rate from shop settings)
-                if (response.tax !== undefined) {
-                    $('#tax').attr('data-tax', response.tax);
-                    $('#tax').text(
-                        (ucurrency_position == 'left' ? ucurrency_symbol : '') +
-                        parseFloat(response.tax).toFixed(2) +
-                        (ucurrency_position == 'right' ? ucurrency_symbol : '')
-                    );
-                }
-                
-                // Update tax rate label
-                if (response.tax_rate !== undefined) {
-                    const taxLabel = $('#tax_label');
-                    if (taxLabel.length) {
-                        const taxText = taxLabel.text().replace(/\(\d+%\)/, `(${Math.round(response.tax_rate)}%)`);
-                        taxLabel.text(taxText);
-                    }
-                }
-                
-                // Update grand total
-                if (response.grand_total !== undefined) {
-                    $('.grandTotal').attr('data', response.grand_total);
-                    $('.grandTotal').text(
-                        (ucurrency_position == 'left' ? ucurrency_symbol : '') +
-                        parseFloat(response.grand_total).toFixed(2) +
-                        (ucurrency_position == 'right' ? ucurrency_symbol : '')
-                    );
-                }
-                
-                // Refresh payment gateways if Payment Restrictions plugin is enabled
-                refreshPaymentGateways();
-            }
-        },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('Error recalculating cart:', error);
-            // [IMPROVED] Show user-friendly error message
-            let errorMessage = 'Failed to update cart totals. Please try again.';
+            var errorMessage = 'Failed to update cart totals. Please try again.';
             if (xhr.status === 0) {
                 errorMessage = 'Network error. Please check your internet connection and try again.';
             } else if (xhr.status >= 500) {
                 errorMessage = 'Server error. Please try again later.';
             }
-            
             if (typeof toastr !== 'undefined') {
-                toastr["error"](errorMessage);
+                toastr['error'](errorMessage);
             } else {
                 alert(errorMessage);
             }
-            
-            // Fallback to old calculation method
-            let total = 0;
-            let subtotal = 0;
-            let grantotal = 0;
-            let shipping = 0;
-            subtotal = parseFloat($('.subtotal').attr('data'));
-            grantotal = parseFloat($('.grandTotal').attr('data'));
-            shipping = parseFloat($('.shipping').attr('data'));
-            var new_grandtotal = grantotal - shipping;
-            let shipCharge = parseFloat($clickedElement.attr('data')); // [IMPROVED] Use stored reference
+            var subtotal = parseFloat($('.subtotal').attr('data'));
+            var grantotal = parseFloat($('.grandTotal').attr('data'));
+            var shipping = parseFloat($('.shipping').attr('data'));
+            var newGrand = grantotal - shipping;
+            var shipCharge = parseFloat($clickedElement.attr('data')) || 0;
             shipping = parseFloat(shipCharge);
-
-            total = parseFloat(parseFloat(new_grandtotal) + shipping);
-
-            $(".shipping").text(
+            var total = parseFloat(parseFloat(newGrand) + shipping);
+            $('.shipping').text(
                 (ucurrency_position == 'left' ? ucurrency_symbol : '') +
                 shipping +
                 (ucurrency_position == 'right' ? ucurrency_symbol : '')
             );
-
-            $(".grandTotal").text(
+            $('.grandTotal').text(
                 (ucurrency_position == 'left' ? ucurrency_symbol : '') +
                 total +
                 (ucurrency_position == 'right' ? ucurrency_symbol : '')
             );
         }
-    }).fail(function(xhr, status, error) {
-        // [IMPROVED] Additional fail handler for network errors (complementary to error callback)
+    }).fail(function (xhr, status, error) {
         console.error('Recalculation AJAX failed:', {
             status: status,
             error: error,
             response: xhr.responseText,
             statusCode: xhr.status
         });
-        
-        // Only show toastr if error callback didn't already handle it
         if (xhr.status === 0 && typeof toastr !== 'undefined') {
-            toastr["error"]('Network error. Please check your internet connection and try again.');
+            toastr['error']('Network error. Please check your internet connection and try again.');
         }
     });
+}
+window.recalculateCheckoutCart = recalculateCheckoutCart;
+
+$(document).on('click', '.shipping-charge', function () {
+    recalculateCheckoutCart();
 })
 
 
@@ -501,6 +493,13 @@ function refreshPaymentGateways() {
     });
 }
 
+// Payment Restrictions: Refresh once on page load so gateways match default shipping (and any rules apply from start)
+if (typeof paymentRestrictionsRefreshUrl !== 'undefined' && paymentRestrictionsRefreshUrl) {
+    $(document).ready(function() {
+        setTimeout(function() { refreshPaymentGateways(); }, 100);
+    });
+}
+
 // Listen to shipping method changes
 $(document).on('change', 'input[name="shipping_charge"]', function() {
     refreshPaymentGateways();
@@ -554,9 +553,9 @@ $(document).on('change', '.checkout-payment-option input[type="radio"]', functio
     $('.checkout-payment-option').removeClass('selected');
     $(this).closest('.checkout-payment-option').addClass('selected');
     
-    // Trigger legacy handler for compatibility
     const paymentMethod = $(this).val();
-    handlePaymentMethodChange(paymentMethod);
+    const $selectedOption = $(this).closest('.checkout-payment-option');
+    handlePaymentMethodChange(paymentMethod, $selectedOption);
 });
 
 // Legacy support for old select (if it exists)
@@ -566,44 +565,49 @@ $("#payment-gateway").on('change', function () {
 });
 
 // Unified payment method change handler
-function handlePaymentMethodChange(paymentMethod) {
-    let offline = offline_gateways;
+// $selectedOption: jQuery object for the selected .checkout-payment-option (has data-gateway-type, data-gateway-keyword)
+function handlePaymentMethodChange(paymentMethod, $selectedOption) {
+    if (!$selectedOption || !$selectedOption.length) {
+        $selectedOption = $('input[name="payment_method"]:checked').closest('.checkout-payment-option');
+    }
+    var gatewayType = ($selectedOption && $selectedOption.length) ? ($selectedOption.attr('data-gateway-type') || 'online') : 'online';
+    var gatewayKeyword = ($selectedOption && $selectedOption.length) ? (($selectedOption.attr('data-gateway-keyword') || '') + '').toLowerCase() : '';
+
+    let offline = typeof offline_gateways !== 'undefined' ? offline_gateways : [];
     let data = [];
     if (offline && Array.isArray(offline)) {
-        offline.map(({
-            id,
-            name
-        }) => {
-            data.push(name);
+        offline.map(function(g) {
+            data.push(g.name);
         });
     }
-    
-    // Update hidden input if exists
-    $("input[name='payment_method']").val(paymentMethod);
+    var isOffline = (gatewayType === 'offline') || (data.indexOf(paymentMethod) !== -1);
 
     $(".gateway-details").hide();
     $(".gateway-details input").attr('disabled', true);
+    $(".iyzico-element").addClass('d-none');
 
-    if (paymentMethod == 'Stripe') {
-        $("#tab-stripe").show();
-        $("#tab-stripe input").removeAttr('disabled');
-    } else {
+    if (isOffline) {
         $("#tab-stripe").hide();
-    }
-
-    if (paymentMethod == 'Authorize.net') {
-        $("#tab-anet").show();
-        $("#tab-anet input").removeAttr('disabled');
-    } else {
         $("#tab-anet").hide();
-    }
-    if (paymentMethod == 'Iyzico') {
-        $(".iyzico-element").removeClass('d-none');
     } else {
-        $(".iyzico-element").addClass('d-none');
+        if (paymentMethod === 'Stripe' || gatewayKeyword.indexOf('stripe') !== -1) {
+            $("#tab-stripe").show();
+            $("#tab-stripe input").removeAttr('disabled');
+        } else {
+            $("#tab-stripe").hide();
+        }
+        if (paymentMethod === 'Authorize.net' || gatewayKeyword.indexOf('authorize') !== -1) {
+            $("#tab-anet").show();
+            $("#tab-anet input").removeAttr('disabled');
+        } else {
+            $("#tab-anet").hide();
+        }
+        if (paymentMethod === 'Iyzico' || gatewayKeyword.indexOf('iyzico') !== -1) {
+            $(".iyzico-element").removeClass('d-none');
+        }
     }
 
-    if (data.indexOf(paymentMethod) != -1) {
+    if (isOffline) {
         let formData = new FormData();
         formData.append('name', paymentMethod);
         $.ajax({
