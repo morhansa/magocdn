@@ -16249,4 +16249,4 @@ odometer.min.css
   .sf-arrows > .sfHover > .sf-with-ul:after {
 	border-top-color: white; /* IE8 fallback colour */
   }
-  
+  div#qc_email_section .qc-section-header {display:none !important}
