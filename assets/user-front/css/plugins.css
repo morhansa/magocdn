@@ -16256,3 +16256,4 @@ odometer.min.css
     width: 120px !important;
     height: auto;
 }
+div#qc_email_section .qc-section-header {display:none}
