@@ -3,8 +3,9 @@
     var settings = $.extend({
       phone: '',
       message: '',
-      size: '72px',
+      size: '50px',
       backgroundColor: '#25D366',
+      borderRadius: '50%',
       position: 'left',
       popupMessage: '',
       showPopup: false,
@@ -39,7 +40,8 @@
       .css({
         'width': settings.size,
         'height': settings.size,
-        'background-color': settings.backgroundColor
+        'background-color': settings.backgroundColor,
+        'border-radius': settings.borderRadius
       });
 
     if (!isInternetExplorer() || settings.showOnIE) {
