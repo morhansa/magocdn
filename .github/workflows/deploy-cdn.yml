@@ -1,0 +1,35 @@
+name: Deploy Assets to Cloudflare R2
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'public/assets/**'
+      - 'public/user-front/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (for Cloudflare R2)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          aws-region: auto
+
+      - name: Sync Files to Cloudflare R2 with 1 Year Cache
+        run: |
+          aws s3 sync ./public/assets s3://${{ secrets.R2_BUCKET_NAME }}/assets/ \
+          --endpoint-url ${{ secrets.R2_ENDPOINT }} \
+          --cache-control "public, max-age=31536000, immutable" \
+          --delete
+          
+          aws s3 sync ./public/user-front s3://${{ secrets.R2_BUCKET_NAME }}/user-front/ \
+          --endpoint-url ${{ secrets.R2_ENDPOINT }} \
+          --cache-control "public, max-age=31536000, immutable" \
+          --delete
