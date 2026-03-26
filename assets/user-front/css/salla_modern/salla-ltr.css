@@ -1,0 +1,113 @@
+/**
+ * Salla Modern – LTR overrides
+ * يطبّق عندما تكون لغة المتجر إنجليزية (أو أي لغة LTR).
+ * يُحمّل بعد home.css عندما html { dir="ltr" }.
+ */
+
+/* الهيدر والقوائم المنسدلة */
+[dir="ltr"] .salla-theme .salla-nav-submenu {
+  right: auto;
+  left: 0;
+}
+
+[dir="ltr"] .salla-theme .salla-dropdown-menu {
+  right: auto;
+  left: 0;
+}
+
+[dir="ltr"] .salla-theme .salla-cart-dropdown {
+  right: auto;
+  left: 0;
+}
+
+@media (max-width: 991px) {
+  [dir="ltr"] .salla-theme .salla-cart-dropdown {
+    right: auto;
+    left: 0;
+  }
+}
+
+/* شارة العدد على الأيقونات: تبقى في الزاوية العلوية الداخلية (تتبع الاتجاه) */
+[dir="ltr"] .salla-theme .salla-badge {
+  right: auto;
+  left: 2px;
+}
+
+/* حقل البحث: اتجاه النص حسب اللغة */
+[dir="ltr"] .salla-theme .salla-search-input {
+  direction: ltr;
+  text-align: left;
+}
+
+/* عناوين الأقسام والمنتجات */
+[dir="ltr"] .salla-theme .salla-section-title {
+  text-align: left;
+}
+
+[dir="ltr"] .salla-theme .salla-product-title,
+[dir="ltr"] .salla-theme .s-product-card-content-title {
+  text-align: left;
+}
+
+/* سلايدر المنتجات والمراجعات: اتجاه التمرير */
+[dir="ltr"] .salla-theme .salla-product-slider:not(.slick-initialized) {
+  direction: ltr;
+}
+
+[dir="ltr"] .salla-theme .salla-reviews-slider:not(.slick-initialized) {
+  direction: ltr;
+}
+
+/* قسم المراجعات والكروت */
+[dir="ltr"] .salla-theme .salla-reviews-section,
+[dir="ltr"] .salla-theme .salla-reviews-section--pro {
+  direction: ltr;
+}
+
+[dir="ltr"] .salla-theme .salla-review-card,
+[dir="ltr"] .salla-theme .salla-review-card--pro {
+  text-align: left;
+  direction: ltr;
+}
+
+[dir="ltr"] .salla-theme .salla-review-card--pro .salla-review-avatar {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+/* الفوتر */
+[dir="ltr"] .salla-theme .salla-footer-full {
+  direction: ltr;
+}
+
+[dir="ltr"] .salla-theme .salla-footer-newsletter-input {
+  direction: ltr;
+}
+
+/* روابط القائمة الفرعية في درج الموبايل */
+[dir="ltr"] .salla-theme .mobile-menu-sublink {
+  padding-right: 16px;
+  padding-left: 28px;
+}
+
+/* أسهم الهيرو: في LTR السابق يسار والتالي يمين */
+[dir="ltr"] .salla-theme .salla-hero-arrow.arrow-prev {
+  right: auto;
+  left: 28px;
+}
+
+[dir="ltr"] .salla-theme .salla-hero-arrow.arrow-next {
+  left: auto;
+  right: 28px;
+}
+
+@media (max-width: 576px) {
+  [dir="ltr"] .salla-theme .salla-hero-arrow.arrow-prev {
+    left: 16px;
+  }
+  [dir="ltr"] .salla-theme .salla-hero-arrow.arrow-next {
+    right: 16px;
+  }
+}
+
+/* الهيدر: ترتيب العناصر يتبع dir (flex)؛ أيقونة اللغة مع النص تستخدم margin-inline من Bootstrap */
